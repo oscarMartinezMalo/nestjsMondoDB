@@ -19,7 +19,6 @@ export class AuthService {
 
         //HASH THE PASSWORD
         const salt = await bcrypt.genSalt(10);
-        console.log(salt);
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // CREATE A NEW USER WITH THE  HASHEDPASSWORD

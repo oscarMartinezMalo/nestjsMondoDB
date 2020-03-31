@@ -1,12 +1,15 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param, Patch, Delete, UsePipes, Header } from "@nestjs/common";
 import { ProductService } from "./products.service";
+import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
+import { ProductValidationSchema } from "./product-joi.validation";
 
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productServicer: ProductService) { }
 
-    // { "title": "oscar", "description": "Martinez", "price": 5 }
+    //Ex. { "title": "oscar", "description": "Martinez", "price": 5 }
     @Post()
+    @UsePipes(new JoiValidationPipe(ProductValidationSchema))
     async addProduct(
         // @Body() completeBody: {title: string, description: string, price: number},  // If you want to get whole the body
         @Body('title') prodTitle: string,
@@ -18,7 +21,8 @@ export class ProductsController {
     }
 
     @Get()
-    async getAllProducts() {
+    async getAllProducts(@Body('user') userCredentials: {id: string, email:string}) {
+        console.log(userCredentials);        
         const products = await this.productServicer.getProducts();
         return products;
     }
