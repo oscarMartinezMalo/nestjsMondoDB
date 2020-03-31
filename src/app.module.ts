@@ -3,12 +3,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './products/product.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './auth/auth.module';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 @Module({
-  imports: [ProductModule, MongooseModule.forRoot(
-    'mongodb+srv://ommalor:ommalor@cluster0-gmrze.mongodb.net/nestjs?retryWrites=true&w=majority'
+  imports: [
+    ProductModule,
+    AuthModule,
+    MongooseModule.forRoot(
+      // Enviroment Variable handled through dotenv npm package( file name .env)
+      process.env.DB_CONNECT
     )],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
