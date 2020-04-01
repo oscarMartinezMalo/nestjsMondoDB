@@ -1,5 +1,8 @@
 # nestjs
-Nestjs Nodejs expressjs
+Nestjs Nodejs expressjs\
+You have to create a .env file in your src folder Ex.
+DB_CONNECT = 'Your MongoDB connection string'
+TOKEN_SECRET = yourJWT
 
 ## Dependencies
 #### For Validation I used Joi
