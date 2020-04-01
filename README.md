@@ -5,7 +5,7 @@ Nestjs Nodejs expressjs
 #### For Validation I used Joi
 * npm i @hapi/joi
 Link to npm package
-[dotenv](https://www.npmjs.com/package/@hapi/joi)   
+[joi](https://www.npmjs.com/package/@hapi/joi)   
 
 
 #### To connect to Mongodb and manipulate the data  I use moongose
@@ -15,12 +15,12 @@ Link to npm package
 #### To encrypt the passoword bcryptjs
 * npm i bcryptjs
 Link to npm package
-[dotenv](https://www.npmjs.com/package/bcryptjs)   
+[bcryptjs](https://www.npmjs.com/package/bcryptjs)   
 
 #### To generate the JWT
 * npm i jsonwebtoken
 Link to npm package
-[dotenv](https://www.npmjs.com/package/jsonwebtoken)    
+[jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)    
 
 #### To store the DataBase connection and the Secrets locally was used dotenv    
 * npm i dotenv
