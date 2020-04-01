@@ -3,6 +3,11 @@ import { ProductService } from "./products.service";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
 import { ProductValidationSchema } from "./product-joi.validation";
 
+interface User {
+    id: string;
+    email: string
+}
+
 @Controller('products')
 export class ProductsController {
     constructor(private readonly productServicer: ProductService) { }
@@ -11,18 +16,16 @@ export class ProductsController {
     @Post()
     @UsePipes(new JoiValidationPipe(ProductValidationSchema))
     async addProduct(
-        // @Body() completeBody: {title: string, description: string, price: number},  // If you want to get whole the body
-        @Body('title') prodTitle: string,
-        @Body('description') prodDesc: string,
-        @Body('price') prodPrice: number) {
-
-        const generatedId = await this.productServicer.insertProduct(prodTitle, prodDesc, prodPrice);
+        @Body() completeBody: { title: string, description: string, price: number, user: User },
+    ) {
+        // const userLogged = completeBody.user;    // Current User
+        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.description, completeBody.price);
         return { id: generatedId };
     }
 
     @Get()
-    async getAllProducts(@Body('user') userCredentials: {id: string, email:string}) {
-        console.log(userCredentials);        
+    async getAllProducts(@Body('user') userCredentials: User) {
+        console.log(userCredentials);
         const products = await this.productServicer.getProducts();
         return products;
     }
