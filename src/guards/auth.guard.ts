@@ -14,12 +14,11 @@ export class AuthGuard implements CanActivate {
         if (!token) { return false; }  // Return 403 Forbidden Error resource that you're not allowed to access
 
         try {
-            const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+            const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
             req.user = verified;  // Save user in the req body
             return true;
         } catch (error) {
             throw new UnauthorizedException('Invalid Token!!!');  // 401 Unauthorized error you first log in with a valid user ID and password
         }
-
     }
 }

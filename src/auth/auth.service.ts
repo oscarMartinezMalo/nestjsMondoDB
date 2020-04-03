@@ -7,6 +7,7 @@ import * as  jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
+    resfreshTokens = [];
 
     constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
 
@@ -45,9 +46,29 @@ export class AuthService {
              throw new ForbiddenException('Wrong Password try again!!!');            
         }
 
-        const token = jwt.sign({ id: userStored.id, email: userStored.email }, process.env.TOKEN_SECRET);
-        return {accessToken: token};
+        const accessToken = this.generateAccessToken(userStored.id, userStored.email);
+        const refreshToken = jwt.sign({ id: userStored.id, email: userStored.email }, process.env.REFRESH_TOKEN_SECRET);
+        this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
+        return { accessToken: accessToken, refreshToken: refreshToken, email: userStored.email};
     }
     // updateUser(){}
+
+    generateAccessToken(userId: string, userEmail: string) {
+        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '25s'});
+    }
+
+    refreshTokenExits( token: string ) {
+        if (!token) throw new ForbiddenException('Access denied');
+        if (!this.resfreshTokens.includes(token)) throw new ForbiddenException('Access denied');
+
+        try {
+            const verified = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+            const newAccessToken = this.generateAccessToken(verified.id, verified.email);
+            return { accessToken: newAccessToken};
+        } catch (error) {
+            throw new ForbiddenException('Access denied');
+        }
+
+    }
 
 }
