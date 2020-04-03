@@ -27,10 +27,10 @@ export class AuthController {
         return token;
     }
 
-    @Post('token')
+    @Post('refresh')
     @UsePipes()
     async resfreshToken(
-        @Headers('auth-token') token: any
+        @Headers('JWT_TOKEN') token: any
         ) {   
          return this.authService.refreshTokenExits(token);   
          

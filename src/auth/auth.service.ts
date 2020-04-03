@@ -7,7 +7,7 @@ import * as  jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
-    resfreshTokens = [];
+    // resfreshTokens = [];
 
     constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
 
@@ -47,18 +47,18 @@ export class AuthService {
         }
 
         const accessToken = this.generateAccessToken(userStored.id, userStored.email);
-        const refreshToken = jwt.sign({ id: userStored.id, email: userStored.email }, process.env.REFRESH_TOKEN_SECRET);
-        this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
+        const refreshToken = jwt.sign({ id: userStored.id, email: userStored.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30s' });
+        // this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
         return { accessToken: accessToken, refreshToken: refreshToken, email: userStored.email};
     }
 
     generateAccessToken(userId: string, userEmail: string) {
-        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '25s'});
+        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s'});
     }
 
     refreshTokenExits( token: string ) {
         if (!token) throw new ForbiddenException('Access denied');
-        if (!this.resfreshTokens.includes(token)) throw new ForbiddenException('Access denied');
+        // if (!this.resfreshTokens.includes(token)) throw new ForbiddenException('Access denied');
 
         try {
             const verified = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
@@ -71,6 +71,7 @@ export class AuthService {
 
     logOut(){
         // delete refreshToken from the dataBase
+        // If you dont set an expire in the refresh token you have to delete the token
     }
 
 }
