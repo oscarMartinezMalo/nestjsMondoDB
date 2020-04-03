@@ -51,7 +51,6 @@ export class AuthService {
         this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
         return { accessToken: accessToken, refreshToken: refreshToken, email: userStored.email};
     }
-    // updateUser(){}
 
     generateAccessToken(userId: string, userEmail: string) {
         return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '25s'});
@@ -68,7 +67,10 @@ export class AuthService {
         } catch (error) {
             throw new ForbiddenException('Access denied');
         }
+    }
 
+    logOut(){
+        // delete refreshToken from the dataBase
     }
 
 }
