@@ -6,14 +6,10 @@ import { Model } from "mongoose";
 @Injectable()
 export class ProductService {
 
-    constructor(@InjectModel('Product') private readonly productModel: Model<Product>) {}
+    constructor(@InjectModel('Product') private readonly productModel: Model<Product>) { }
 
-    async insertProduct(title: string, desc: string, price: number) {
-        const newProduct = new this.productModel({
-            title,
-            description: desc,
-            price
-        });
+    async insertProduct(title: string, price: number, category: string, imageUrl: string) {
+        const newProduct = new this.productModel({ title, price, category, imageUrl });
         const result = await newProduct.save();
         return result.id as string;
     }
@@ -24,8 +20,9 @@ export class ProductService {
         return products.map((prod) => ({
             id: prod.id,
             title: prod.title,
-            description: prod.description,
-            price: prod.price
+            price: prod.price,
+            category: prod.category,
+            imageUrl: prod.imageUrl
         }));
     }
 
@@ -34,26 +31,28 @@ export class ProductService {
         return {
             id: product.id,
             title: product.title,
-            description: product.description,
-            price: product.price
+            price: product.price,
+            category: product.category,
+            imageUrl: product.imageUrl
         };
     }
 
-    async updateProduct(id: string, title: string, desc: string, price: number) {
+    async updateProduct(id: string, title: string, price: number, category: string, imageUrl: string) {
         const updateProduct = await this.findProduct(id);
 
         if (title) { updateProduct.title = title; }
-        if (desc) { updateProduct.description = desc; }
         if (price) { updateProduct.price = price; }
+        if (category) { updateProduct.category = category; }
+        if (imageUrl) { updateProduct.imageUrl = imageUrl; }
 
         updateProduct.save();
     }
 
     async deleteProduct(id: string) {
-       const result = await this.productModel.deleteOne({_id: id}).exec();
-       if( result.n === 0) {
-           throw new NotFoundException('Could not find product');           
-       }
+        const result = await this.productModel.deleteOne({ _id: id }).exec();
+        if (result.n === 0) {
+            throw new NotFoundException('Could not find product');
+        }
     }
 
     async findProduct(id: string): Promise<Product> {

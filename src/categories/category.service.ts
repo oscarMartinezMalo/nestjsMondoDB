@@ -19,7 +19,7 @@ export class CategoryService {
 
     async getCategories() {
         // Map the array since the object inside the array are reference Obj
-        const categories = await this.categoryModel.find().exec();
+        const categories = await this.categoryModel.find().sort({name: 1}).exec();
         return categories.map((category) => ({
             id: category.id,
             name: category.name

@@ -4,6 +4,7 @@ import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
 import { ProductValidationSchema } from "./product-joi.validation";
 import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
+import { Product } from "./product.model";
 
 @Controller('products')
 export class ProductsController {
@@ -12,20 +13,22 @@ export class ProductsController {
     //Ex. Poduct Format { "title": "oscar", "description": "Martinez", "price": 5 }
     @Post()
     @UsePipes(new JoiValidationPipe(ProductValidationSchema))
-    @UseGuards(new AuthGuard())
+    // @UseGuards(new AuthGuard())
     async addProduct(
-        @Body() completeBody: { title: string, description: string, price: number},
-        @User() user: {id: string, email: string}
+        @Body() completeBody: Product,
+        // @User() user: {id: string, email: string
     ) {
         // console.log(user);
-        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.description, completeBody.price);
+        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl);
         return { id: generatedId };
     }
 
 
     @Get()
-    @UseGuards(new AuthGuard())
-    async getAllProducts(@User() user: { id: string, email: string }) {
+    // @UseGuards(new AuthGuard())
+    async getAllProducts(
+        // @User() user: { id: string, email: string }
+        ) {
         // console.log(user);
         const products = await this.productServicer.getProducts();
         return products;
@@ -42,9 +45,11 @@ export class ProductsController {
     async updateProduct(
         @Param('id') prodId: string,
         @Body('title') prodTitle: string,
-        @Body('description') prodDesc: string,
-        @Body('price') prodPrice: number) {
-        await this.productServicer.updateProduct(prodId, prodTitle, prodDesc, prodPrice);
+        @Body('price') prodPrice: number,
+        @Body('category') prodCategory: string,
+        @Body('imageUrl') prodImageUrl: string,
+        ) {
+        await this.productServicer.updateProduct(prodId, prodTitle, prodPrice, prodCategory, prodImageUrl);
         return null;
     }
     
