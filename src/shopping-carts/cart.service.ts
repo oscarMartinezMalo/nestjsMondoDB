@@ -31,7 +31,7 @@ export class CartService {
         const p = await cart.find({ items: { $elemMatch: product } });
     }
 
-    async addProductToCard(cartId: string, product) {
+    async addProductToCard(cartId: string, product: Product, change: number) {
         let result;
         const query = { $and: [{ _id: cartId }, { 'items.quantity': { $exists: true } }, { 'items.product.id': product.id }] };
 
@@ -41,7 +41,7 @@ export class CartService {
             result.items.push({ quantity: 1, product: product });
         } else {
             result.items.filter(p => {
-                if (p.product.id === product.id) p.quantity++;
+                if (p.product.id === product.id) p.quantity = p.quantity + change;
             });
         }
 

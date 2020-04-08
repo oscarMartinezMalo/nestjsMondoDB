@@ -7,26 +7,28 @@ import { Product } from "src/products/product.model";
 export class CartController {
     constructor(private readonly cartService: CartService) { }
 
+    @Get('create')
+    async addCart() {
+        const cartId = await this.cartService.createEmptyCart();
+        return {id: cartId};
+    }
+
     @Get(':id')
     async getCart(
         @Param('id') cartId: string
     ) {
-        const generatedId = await this.cartService.getCartById(cartId);
-        return generatedId ;
+        const cart = await this.cartService.getCartById(cartId);
+        return cart ;
     }
 
-    @Get('create')
-    async addCart( ) {
-        const generatedId = await this.cartService.createEmptyCart();
-        return { id: generatedId };
-    }
 
-    @Post('add-item')
+    @Post('update-item-quantity')
     async getItemToCard(
         @Body('cartId') cartId: string,
         @Body('product') product: Product,
+        @Body('change') change: number,
     ) {
-        const cart = await this.cartService.addProductToCard(cartId, product);
+        const cart = await this.cartService.addProductToCard(cartId, product, change);
         return cart;
     }
 
