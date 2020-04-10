@@ -22,4 +22,18 @@ export class OrderController {
         .insertOrder(completeBody.userId, completeBody.shipping, completeBody.datePlaced, completeBody.items);
         return { id: generatedId };
     }
+
+    @Get(':userId')
+    // @UseGuards(new AuthGuard())
+    async getMyOders(@Param('userId') userId: string  ) {
+        const myOders = await this.orderServicer.getMyOrders( userId);
+        return myOders;
+    }
+
+    @Get()
+    // @UseGuards(new AuthGuard())
+    async getAllOrders() {
+        const myOders = await this.orderServicer.getAllOrders();
+        return myOders;
+    }
 }
