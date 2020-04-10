@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
 import { CategoryModule } from './categories/category.module';
+import { OrderModule } from './orders/order.module';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ dotenv.config();
     ProductModule,
     CategoryModule,
     CartModule,
+    OrderModule,
     AuthModule,
     MongooseModule.forRoot(
       // Enviroment Variable handled through dotenv npm package( file name .env)

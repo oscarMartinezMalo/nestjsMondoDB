@@ -43,33 +43,38 @@ export class AuthService {
         // CHECK IF PASSWORD IS CORRECT
         const validPass = await bcrypt.compare(password, userStored.password);
         if (!validPass) {
-             throw new ForbiddenException('Wrong Password try again!!!');            
+            throw new ForbiddenException('Wrong Password try again!!!');
         }
 
         const accessToken = this.generateAccessToken(userStored.id, userStored.email);
-        const refreshToken = jwt.sign({ id: userStored.id, email: userStored.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30s' });
+        const refreshToken = jwt.sign({
+            user: {
+                id: userStored.id,
+                email: userStored.email
+            }
+        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30s' });
         // this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
-        return { accessToken: accessToken, refreshToken: refreshToken, email: userStored.email};
+        return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email };
     }
 
     generateAccessToken(userId: string, userEmail: string) {
-        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s'});
+        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
     }
 
-    refreshTokenExits( token: string ) {
+    refreshTokenExits(token: string) {
         if (!token) throw new ForbiddenException('Access denied');
         // if (!this.resfreshTokens.includes(token)) throw new ForbiddenException('Access denied');
 
         try {
             const verified = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
             const newAccessToken = this.generateAccessToken(verified.id, verified.email);
-            return { accessToken: newAccessToken};
+            return { accessToken: newAccessToken };
         } catch (error) {
             throw new ForbiddenException('Access denied');
         }
     }
 
-    logOut(){
+    logOut() {
         // delete refreshToken from the dataBase
         // If you dont set an expire in the refresh token you have to delete the token
     }

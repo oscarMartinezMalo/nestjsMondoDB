@@ -3,6 +3,7 @@ import { Cart } from "./cart.model";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Product } from "src/products/product.model";
+import { Item } from "./cart.model";
 
 // dateCreated: date,
 //     items: [{
@@ -24,33 +25,44 @@ export class CartService {
         return result.id as string;
     }
 
-    async addOrUpdateProductFromCart(cartId: string, product: Product) {
-        //Find is product exits if exits add 1 to quantity
-        //If not exit add a new product to this cart quantity 0
-        const cart = this.cartModel.findById(cartId);
-        const p = await cart.find({ items: { $elemMatch: product } });
-    }
-
     async addProductToCard(cartId: string, product: Product, change: number) {
-        let result;
         const query = { $and: [{ _id: cartId }, { 'items.quantity': { $exists: true } }, { 'items.product.id': product.id }] };
 
-        result = await this.cartModel.findOne(query);
-        if (!result) {
-            result = (await this.cartModel.findOne({ _id: cartId }));
-            result.items.push({ quantity: 1, product: product });
-        } else {
-            result.items.filter(p => {
-                if (p.product.id === product.id) p.quantity = p.quantity + change;
-            });
+        let cart = await this.cartModel.findOne(query);
+        if (!cart) {
+            cart = (await this.cartModel.findOne({ _id: cartId }));
+           this.addNotExistItem(cart, cartId, product);
+        } else {           
+            this.addItemOrDeleteFromCart(cart, product, change);
         }
 
-        result.save();
-        return result;
+        cart.save();
+        return cart;
+    }
+
+    // Increase or decrease cart product if product is 0 delete the item from the list
+    async addItemOrDeleteFromCart(cart: Cart, product: Product, change:number ) {
+       cart.items = cart.items.filter(p => {
+            if (p.product.id === product.id) {
+                p.quantity = p.quantity + change;
+            }
+            return p.quantity !== 0;
+        });
+    }
+
+    async addNotExistItem(cart, cartId, product) {
+        cart.items.push({ quantity: 1, product: product });
     }
 
     async getCartById(cartId: string) {
         return (await this.cartModel.findOne({ _id: cartId }))
+    }
+
+    async deleteAllProductFromCart(cartId: string) {
+        const cart = await (await this.getCartById(cartId));
+        cart.items = [];
+        cart.save();
+        return cart;
     }
 
     // { { id: "123", title: "asd", price: 12, category: "bread", imageUrl: "asd" }, 3 }

@@ -20,7 +20,7 @@ export interface Cart extends mongoose.Document {
     items: Item[];
 }
 
-interface Item{
+export interface Item{
     quantity: number,
     product: Product
 }
@@ -31,5 +31,4 @@ interface Product {
     price: number;
     category: string;
     imageUrl: string;
-    quantity: 0;
 }
