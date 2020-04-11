@@ -1,6 +1,5 @@
 import { Controller, Post, Body, Get, Param, Patch, Delete, UsePipes } from "@nestjs/common";
 import { CartService } from "./cart.service";
-import { Cart } from "./cart.model";
 import { Product } from "src/products/product.model";
 
 @Controller('cart')
@@ -14,9 +13,7 @@ export class CartController {
     }
 
     @Get(':id')
-    async getCart(
-        @Param('id') cartId: string
-    ) {
+    async getCart(@Param('id') cartId: string) {
         const cart = await this.cartService.getCartById(cartId);
         return cart;
     }
@@ -33,7 +30,7 @@ export class CartController {
 
     @Delete(':id')
     async removeProduct(@Param('id') cartId: string) {
-       const cart = await this.cartService.deleteAllProductFromCart (cartId);
-    return cart;
+        const cart = await this.cartService.deleteAllProductFromCart(cartId);
+        return cart;
     }
 }

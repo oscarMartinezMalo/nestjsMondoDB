@@ -10,38 +10,28 @@ import { Product } from "./product.model";
 export class ProductsController {
     constructor(private readonly productServicer: ProductService) { }
 
-    //Ex. Poduct Format { "title": "oscar", "description": "Martinez", "price": 5 }
     @Post()
     @UsePipes(new JoiValidationPipe(ProductValidationSchema))
-    // @UseGuards(new AuthGuard())
-    async addProduct(
-        @Body() completeBody: Product,
-        // @User() user: {id: string, email: string
-    ) {
-        // console.log(user);
+    @UseGuards(new AuthGuard())
+    async addProduct(        @Body() completeBody: Product    ) {
         const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl);
         return { id: generatedId };
     }
 
-
     @Get()
-    // @UseGuards(new AuthGuard())
     async getAllProducts(
-        // @User() user: { id: string, email: string }
         ) {
-        // console.log(user);
         const products = await this.productServicer.getProducts();
         return products;
     }
-
 
     @Get(':id')
     getProduct(@Param('id') prodId: string) {
         return this.productServicer.getSingleProduct(prodId);
     }
 
-
     @Patch(':id')
+    @UseGuards(new AuthGuard())
     async updateProduct(
         @Param('id') prodId: string,
         @Body('title') prodTitle: string,
@@ -53,8 +43,8 @@ export class ProductsController {
         return null;
     }
     
-
     @Delete(':id')
+    @UseGuards(new AuthGuard())
     async removeProduct(@Param('id') prodId: string) {
         await this.productServicer.deleteProduct(prodId);
         return null;

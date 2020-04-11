@@ -52,13 +52,13 @@ export class AuthService {
                 id: userStored.id,
                 email: userStored.email
             }
-        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '30s' });
+        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1h' });
         // this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
         return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email };
     }
 
     generateAccessToken(userId: string, userEmail: string) {
-        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '13m' });
     }
 
     refreshTokenExits(token: string) {

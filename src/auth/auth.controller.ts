@@ -15,24 +15,22 @@ export class AuthController {
         // @Body('email') authEmail: string,                       // If Get Element from body one by onte
         // @Body('password') authPassword: string                  // the pipe auth is called two times
     ) {
-       const res =  await this.authService.createAccount(completeBody.email, completeBody.password);
+        await this.authService.createAccount(completeBody.email, completeBody.password);
         return { message: 'User created' };
     }
 
     // @Header()
     @Post('login')
     @UsePipes(new JoiValidationPipe(loginValidationSchema))
-    async logIn( @Body() completeBody: { email: string, password: string } ) {
+    async logIn(@Body() completeBody: { email: string, password: string }) {
         const token = await this.authService.logIn(completeBody.email, completeBody.password);
         return token;
     }
 
     @Post('refresh')
     @UsePipes()
-    async resfreshToken(
-        @Headers('JWT_TOKEN') token: any
-        ) {   
-         return this.authService.refreshTokenExits(token);   
-         
+    async resfreshToken(@Headers('JWT_TOKEN') token: any) {
+        return this.authService.refreshTokenExits(token);
+
     }
 }

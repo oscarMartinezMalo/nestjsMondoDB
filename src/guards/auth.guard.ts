@@ -10,7 +10,7 @@ export class AuthGuard implements CanActivate {
     }
 
     validateRequest(req: any) {
-        const token = req.headers['auth-token'];
+        const token = req.headers['auth-token'].split(' ')[1];
         if (!token) { return false; }  // Return 403 Forbidden Error resource that you're not allowed to access
 
         try {
