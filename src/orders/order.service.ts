@@ -22,4 +22,9 @@ export class OrderService {
         const result = await this.orderModel.find().exec();
         return result;
     }
+
+    async getOrderById( orderId: string) {
+        const result = await this.orderModel.findOne({ _id: orderId }).exec();
+        return result;
+    }
 }
