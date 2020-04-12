@@ -1,12 +1,20 @@
-import { Controller, Post, Body, UsePipes, Headers } from "@nestjs/common";
+import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { registerValidationSchema, loginValidationSchema } from "./auth-joi.validation";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
+import { User } from "src/decorators/user.decorator";
+import { AuthGuard } from "src/guards/auth.guard";
 
 @Controller('auth')
 export class AuthController {
 
     constructor(private readonly authService: AuthService) { }
+    @Get() 
+    @UseGuards(new AuthGuard())
+    getCredentials(@User() user: { id: string, email: string }) {
+        return {id: user.id, email: user.email};
+    }
+
     // Ex. { "email": "ommalor@gmail.com", "password": "asdasd" }
     @Post('signup')
     @UsePipes(new JoiValidationPipe(registerValidationSchema))
@@ -27,10 +35,9 @@ export class AuthController {
         return token;
     }
 
-    @Post('refresh')
+    @Post('refresh-token')
     @UsePipes()
-    async resfreshToken(@Headers('JWT_TOKEN') token: any) {
-        return this.authService.refreshTokenExits(token);
-
+    async resfreshToken(@Headers('JWT_TOKEN') refreshToken: any) {
+        return this.authService.getNewAccessToken(refreshToken);
     }
 }

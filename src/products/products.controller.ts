@@ -13,14 +13,14 @@ export class ProductsController {
     @Post()
     @UsePipes(new JoiValidationPipe(ProductValidationSchema))
     @UseGuards(new AuthGuard())
-    async addProduct(        @Body() completeBody: Product    ) {
+    async addProduct(@Body() completeBody: Product) {
         const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl);
         return { id: generatedId };
     }
 
     @Get()
     async getAllProducts(
-        ) {
+    ) {
         const products = await this.productServicer.getProducts();
         return products;
     }
@@ -38,11 +38,11 @@ export class ProductsController {
         @Body('price') prodPrice: number,
         @Body('category') prodCategory: string,
         @Body('imageUrl') prodImageUrl: string,
-        ) {
+    ) {
         await this.productServicer.updateProduct(prodId, prodTitle, prodPrice, prodCategory, prodImageUrl);
         return null;
     }
-    
+
     @Delete(':id')
     @UseGuards(new AuthGuard())
     async removeProduct(@Param('id') prodId: string) {

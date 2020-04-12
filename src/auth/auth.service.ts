@@ -61,17 +61,21 @@ export class AuthService {
         return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '13m' });
     }
 
-    refreshTokenExits(token: string) {
-        if (!token) throw new ForbiddenException('Access denied');
+    getNewAccessToken(refreshToken: string) {
+        if (!refreshToken) throw new ForbiddenException('Access denied');
         // if (!this.resfreshTokens.includes(token)) throw new ForbiddenException('Access denied');
 
         try {
-            const verified = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+            const verified = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
             const newAccessToken = this.generateAccessToken(verified.id, verified.email);
             return { accessToken: newAccessToken };
         } catch (error) {
             throw new ForbiddenException('Access denied');
         }
+    }
+
+    getCredential() {
+        //
     }
 
     logOut() {
