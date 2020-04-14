@@ -36,29 +36,16 @@ export class AuthService {
     async logIn(email: string, password: string) {
         // CHECK IF THE EMAIL EXIST IN THE DATABASE
         const userStored = await this.userModel.findOne({ email: email });
-        if (!userStored) {
-            throw new ForbiddenException('User not found');
-        };
+        if (!userStored) { throw new ForbiddenException('User not found'); };
 
         // CHECK IF PASSWORD IS CORRECT
         const validPass = await bcrypt.compare(password, userStored.password);
-        if (!validPass) {
-            throw new ForbiddenException('Wrong Password try again!!!');
-        }
+        if (!validPass) { throw new ForbiddenException('Wrong Password try again!!!'); }
 
         const accessToken = this.generateAccessToken(userStored.id, userStored.email);
-        const refreshToken = jwt.sign({
-            user: {
-                id: userStored.id,
-                email: userStored.email
-            }
-        }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1h' });
+        const refreshToken = jwt.sign({ user: { id: userStored.id, email: userStored.email } }, process.env.REFRESH_TOKEN_SECRET);
         // this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
         return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email };
-    }
-
-    generateAccessToken(userId: string, userEmail: string) {
-        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '13m' });
     }
 
     getNewAccessToken(refreshToken: string) {
@@ -67,15 +54,15 @@ export class AuthService {
 
         try {
             const verified = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-            const newAccessToken = this.generateAccessToken(verified.id, verified.email);
+            const newAccessToken = this.generateAccessToken(verified.user.id, verified.user.email);
             return { accessToken: newAccessToken };
         } catch (error) {
             throw new ForbiddenException('Access denied');
         }
     }
 
-    getCredential() {
-        //
+    private generateAccessToken(userId: string, userEmail: string) {
+        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5s' });
     }
 
     logOut() {
