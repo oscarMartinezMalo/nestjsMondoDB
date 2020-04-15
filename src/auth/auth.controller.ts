@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards } from "@nestjs/common";
+import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards, Delete, Param } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { registerValidationSchema, loginValidationSchema } from "./auth-joi.validation";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
@@ -13,8 +13,9 @@ export class AuthController {
     // Return the User After passes the Guard 
     @Get()
     @UseGuards(new AuthGuard())
-    getCredentials(@User() user: { id: string, email: string }) {
-        return { id: user.id, email: user.email };
+    getCredentials(@User() user: { id: string, email: string, role: string }) {
+        // Instance of this you should get the current User from the dataBase
+        return { id: user.id, email: user.email, role: user.role };
     }
 
     @Post('signup')
@@ -37,5 +38,11 @@ export class AuthController {
         const refToken = Object.values(refreshToken)[0] as string;
         const token = this.authService.getNewAccessToken(refToken);
         return token;
+    }
+
+    @Delete(':token')
+    async deleteRefreshToken(@Param('token') token: string){
+        await this.authService.logOut(token);
+        return null;        
     }
 }
