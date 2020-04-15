@@ -43,7 +43,7 @@ export class AuthService {
         if (!validPass) { throw new ForbiddenException('Wrong Password try again!!!'); }
 
         const accessToken = this.generateAccessToken(userStored.id, userStored.email);
-        const refreshToken = jwt.sign({ user: { id: userStored.id, email: userStored.email } }, process.env.REFRESH_TOKEN_SECRET);
+        const refreshToken = jwt.sign({ user: { id: userStored.id, email: userStored.email } }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '1h' });
         // this.resfreshTokens.push( refreshToken); // Store refresh token in the dataBase
         return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email };
     }
@@ -62,7 +62,7 @@ export class AuthService {
     }
 
     private generateAccessToken(userId: string, userEmail: string) {
-        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '5s' });
+        return jwt.sign({ id: userId, email: userEmail }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '6000s' });
     }
 
     logOut() {
