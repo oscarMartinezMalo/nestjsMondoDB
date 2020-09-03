@@ -7,8 +7,8 @@ import { Order } from "./order.model";
 export class OrderService {
     constructor(@InjectModel('Order') private readonly orderModel: Model<Order>) { }
 
-    async insertOrder(userId: string, shipping, datePlaced: string, items: any) {
-       const newOrder = new this.orderModel({userId, shipping, datePlaced, items});
+    async insertOrder(userId: string, paypalOrderID, shipping, datePlaced: string, items: any) {
+        const newOrder = new this.orderModel({ userId, paypalOrderID, shipping, datePlaced, items});
        const result = await newOrder.save();
        return result.id as string;
     }

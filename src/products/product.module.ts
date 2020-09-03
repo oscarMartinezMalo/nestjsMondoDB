@@ -9,6 +9,7 @@ import { ProductSchema } from "./product.model";
     imports: [MongooseModule.forFeature([{name: 'Product', schema: ProductSchema}])],
     controllers:[ProductsController],
     providers:[ProductService],
+    exports:[ProductService]
 })
 export class ProductModule implements NestModule{
     // Apply Middleware to a route

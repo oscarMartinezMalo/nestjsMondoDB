@@ -2,6 +2,7 @@ import * as mongoose from 'mongoose';
 
 export const OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true},
+    paypalOrderID: { type: String, required: true },
     datePlaced: { type: String, required: true },
     shipping: { 
         name: { type: String },
@@ -22,6 +23,7 @@ export const OrderSchema = new mongoose.Schema({
 
 export interface Order extends mongoose.Document {
     id?: string;
+    paypalOrderID?: string;
     userId: string;
     shipping: Shipping;
     datePlaced: string;
@@ -32,7 +34,10 @@ interface Shipping {
     name: string;
     address: string;
     apartment: string;
+    zipCode: string;
     city: string;
+    state: string;
+    country: string;
 }
 
 export interface OrderItem {

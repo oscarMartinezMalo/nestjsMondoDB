@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 exports.OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true },
+    paypalOrderID: { type: String, required: true },
     datePlaced: { type: String, required: true },
     shipping: {
         name: { type: String },

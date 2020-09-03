@@ -3,12 +3,16 @@ import { OrderSchema } from "./order.model";
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrderController } from "./order.controller";
 import { OrderService } from "./order.service";
+import { ProductModule } from "src/products/product.module";
+
 // import { AuthMiddleware } from "src/middlewares/auth.middleware";
+import { PaypalPaymentService } from './paypal-payment/paypal-payment.service';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }])],
+    imports: [MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),
+        ProductModule],
     controllers: [OrderController],
-    providers: [OrderService],
+    providers: [OrderService, PaypalPaymentService],
 })
 export class OrderModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

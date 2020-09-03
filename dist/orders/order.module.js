@@ -11,15 +11,18 @@ const order_model_1 = require("./order.model");
 const mongoose_1 = require("@nestjs/mongoose");
 const order_controller_1 = require("./order.controller");
 const order_service_1 = require("./order.service");
+const product_module_1 = require("../products/product.module");
+const paypal_payment_service_1 = require("./paypal-payment/paypal-payment.service");
 let OrderModule = class OrderModule {
     configure(consumer) {
     }
 };
 OrderModule = __decorate([
     common_1.Module({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Order', schema: order_model_1.OrderSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Order', schema: order_model_1.OrderSchema }]),
+            product_module_1.ProductModule],
         controllers: [order_controller_1.OrderController],
-        providers: [order_service_1.OrderService],
+        providers: [order_service_1.OrderService, paypal_payment_service_1.PaypalPaymentService],
     })
 ], OrderModule);
 exports.OrderModule = OrderModule;

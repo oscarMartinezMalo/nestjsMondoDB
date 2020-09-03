@@ -20,6 +20,7 @@ ProductModule = __decorate([
         imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Product', schema: product_model_1.ProductSchema }])],
         controllers: [products_controller_1.ProductsController],
         providers: [products_service_1.ProductService],
+        exports: [products_service_1.ProductService]
     })
 ], ProductModule);
 exports.ProductModule = ProductModule;

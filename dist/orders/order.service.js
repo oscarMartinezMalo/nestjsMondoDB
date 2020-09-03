@@ -19,8 +19,8 @@ let OrderService = class OrderService {
     constructor(orderModel) {
         this.orderModel = orderModel;
     }
-    async insertOrder(userId, shipping, datePlaced, items) {
-        const newOrder = new this.orderModel({ userId, shipping, datePlaced, items });
+    async insertOrder(userId, paypalOrderID, shipping, datePlaced, items) {
+        const newOrder = new this.orderModel({ userId, paypalOrderID, shipping, datePlaced, items });
         const result = await newOrder.save();
         return result.id;
     }
