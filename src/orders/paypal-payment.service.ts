@@ -1,43 +1,19 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { Injectable } from '@nestjs/common';
 import * as checkoutNodeJssdk from "@paypal/checkout-server-sdk";
-import { Order } from '../order.model';
+import { Order } from './order.model';
 import { ProductService } from 'src/products/products.service';
 
 
 @Injectable()
 export class PaypalPaymentService {
-    private completeBody: Order;
     private orderId: string;
 
     constructor(private readonly productService: ProductService,
         // private readonly httpService: HttpService
         ) { }
 
-    async paypalCheckOut(completeBody: Order) {
-        this.completeBody = completeBody;
-
-        const environment = new checkoutNodeJssdk.core.SandboxEnvironment(
-            'ASFFab1yjnV6n-pKnMLfhURx2O7sHUM8wYBfTztwGP0UH4TuTMDjTk0X2G06XjUFcCatr95BMudLYUB-',
-            'EIk0gpDTqIe4E4wuMiOHOG9y0WOp5OAq1R2Ampe3GirlMrUGMueqZk2rlVBY7TD5A4qJG5JnY8pesOe4');
-        const client = new checkoutNodeJssdk.core.PayPalHttpClient(environment);
-        const request = new checkoutNodeJssdk.orders.OrdersCreateRequest();
-        
-        // End This seccion is to process the order in the backend
-            // This process the order and gave you a and url for the user approve the order
-            // request.requestBody(await this.buildRequestBody());
-            // const response = await client.execute(request);
-
-            // if (response.statusCode === 201) {
-            //     for (let index = 0; index < response.result.links.length; index++) {
-            //         if (response.result.links[index]['rel'] === 'approve')
-            //         return { orderId: response.result.id, paypalUrl: response.result.links[index]['href']}
-            //     }
-            // }
-       //// End This seccion is to process the order in the backend
-        return await this.buildRequestBody();
-    }
-
+    // Process the order having the order ID
     async captureOrder(orderId) {
         const environment = new checkoutNodeJssdk.core.SandboxEnvironment(
             'ASFFab1yjnV6n-pKnMLfhURx2O7sHUM8wYBfTztwGP0UH4TuTMDjTk0X2G06XjUFcCatr95BMudLYUB-',
@@ -46,19 +22,14 @@ export class PaypalPaymentService {
 
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
         const response = await client.execute(request);
-        return response.statusCode === 201 ?  true :  false;
-
-        // const requestt = new checkoutNodeJssdk.orders.OrdersGetRequest(orderId);
-        // const responset = await client.execute(requestt);
-        // console.log(responset);
-        // if (response.statusCode === 201) {
-        //     const respCheckout = new checkoutNodeJssdk.orders.OrdersAuthorizeRequest(orderId);
-        //     const responseIt = await client.execute(respCheckout);
-        //     console.log(responseIt);
-        // }
+        return response.statusCode === 201 ? true : false;
     }
 
-    async buildRequestBody() {
+    async paypalCheckOut(completeBody: Order) {      
+        return await this.buildRequestBody(completeBody);
+    }
+
+    async buildRequestBody(completeBody: Order) {
         // This seccion is to process the order in the backend
         const paypalObj = {
         "intent": "CAPTURE",
@@ -75,10 +46,10 @@ export class PaypalPaymentService {
        //// End This seccion is to process the order in the backend
 
         paypalObj.purchase_units[0] = this.getPurchaseUnitObj();
-        const objTest = await this.getItemsList();
+        const objTest = await this.getItemsList(completeBody);
         paypalObj.purchase_units[0].items = objTest.itemList;
         paypalObj.purchase_units[0].amount = this.getAmountObj(objTest.itemsTotalTax, objTest.itemsTotalPrice);
-        paypalObj.purchase_units[0].shipping = this.getShippingObj();
+        paypalObj.purchase_units[0].shipping = this.getShippingObj(completeBody);
 
         return paypalObj;
     }
@@ -96,12 +67,12 @@ export class PaypalPaymentService {
         }
     }
 
-    private async getItemsList(): Promise<{ itemList: any[], itemsTotalTax: number, itemsTotalPrice: number }> {
+    private async getItemsList(completeBody: Order): Promise<{ itemList: any[], itemsTotalTax: number, itemsTotalPrice: number }> {
         const itemList = [];
         let itemsTotalTax = 0;
         let itemsTotalPrice = 0;
 
-        for (const item of this.completeBody.items) {
+        for (const item of completeBody.items) {
             const itemDB = await this.productService.getSingleProduct(item.product.id);
             const itemTax = Math.ceil(itemDB.price * 0.07);
             itemsTotalTax += itemTax;
@@ -159,19 +130,19 @@ export class PaypalPaymentService {
         }
     }
 
-    private getShippingObj() {
+    private getShippingObj(completeBody: Order) {
         return {
             "method": "United States Postal Service",
             "name": {
-                "full_name": this.completeBody.shipping.name
+                "full_name": completeBody.shipping.name
             },
             "address": {
-                "address_line_1": this.completeBody.shipping.address,
-                "address_line_2": this.completeBody.shipping.apartment,
-                "admin_area_2": this.completeBody.shipping.city,
-                "admin_area_1": this.completeBody.shipping.state,
-                "postal_code": this.completeBody.shipping.zipCode,
-                "country_code": this.completeBody.shipping.country  // Validate to be a code sample 
+                "address_line_1": completeBody.shipping.address,
+                "address_line_2": completeBody.shipping.apartment,
+                "admin_area_2": completeBody.shipping.city,
+                "admin_area_1": completeBody.shipping.state,
+                "postal_code": completeBody.shipping.zipCode,
+                "country_code": completeBody.shipping.country  // Validate to be a code sample 
             }
         }
     }

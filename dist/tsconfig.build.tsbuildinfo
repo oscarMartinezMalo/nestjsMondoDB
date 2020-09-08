@@ -1242,31 +1242,27 @@
         "signature": "1c7e5b4bfafd7feb46a5d617dc37e772cb29488191df74bfcb875daec9b89759"
       },
       "../src/orders/order.model.ts": {
-        "version": "39d09181ef5ca8f3f6a6d0feeddecfc74c0d8e49e2e5065f005ecc718719edd1",
+        "version": "ff29f3e3e7d4d8a0adf982025d152fd87899de3fe94d1795aa65be82e054ae5e",
         "signature": "5876324a1b8c52831c79526ddfb5618659d9d30e4af8f8f425ffa4acaef3929d"
       },
       "../src/orders/order.service.ts": {
         "version": "0030f6a552d1ce74843f65edd9f9c958e16578129b034df818bfb6b6d80b6102",
         "signature": "cd7eaee640eeca9c291365e8685e46f76aee7e0988141d417da014953dd49411"
       },
-      "../src/orders/paypal-payment/paypal-payment.service.ts": {
-        "version": "aa2f2f2f6a9586991278c46012e7e0996e4b526dad97a25506ee2056122fb6b9",
-        "signature": "00271b3e01d6b4338b97ffaa40a5fbe23d617b0abdb053cd4047ab772b4ab542"
+      "../src/orders/paypal-payment.service.ts": {
+        "version": "198ca4e70fa4dc6740350faf12e1586ee3c82328349283de8a3a43b2fbeadeb4",
+        "signature": "6eb04956da52ed338b0b8669db9444e1a46a87bbc48fc20b2e95cc08bd21d2cb"
       },
       "../src/orders/order.controller.ts": {
-        "version": "b14ced3e7628b7258076b6988565c8e7b9295365ea5d5af31f5335c60dfdd7da",
-        "signature": "9462a10cd3301ad2dbc5f80963dcc995c73ab098a6c77c9da1aa20a925f2104e"
+        "version": "5b3b17511f76e315ec69f9c4ebfa6368b83af5f0d26c4dec338359bb60869b93",
+        "signature": "2106a82cd6370f239f7f937a5307d2b0f8ad79bd079cdf45d05eafbccc9a4aba"
       },
       "../src/orders/order.module.ts": {
-        "version": "ff918f54a65d2c7c97e682cb2d171898fb735e8da8556c3623da765fbdd05ba8",
+        "version": "5b6b8850d3dd7048f5df3c850dd3a2902635dee936fcc9e856030449508b9117",
         "signature": "a994fec04e63533d1ead259bf2ed3e10e60030f994e5c8a150915ec592407463"
       },
-      "../src/paypal/paypal.controller.ts": {
-        "version": "d67202cd7ec24fe9af87a0406577715a880a61f0d476c07c4ae1818baeb992dc",
-        "signature": "a01da1cea76bff98fa3235a9d2b6f0b40484ae724356d90b450d7831659a099a"
-      },
       "../src/app.module.ts": {
-        "version": "cc488a2ed1f1d29c547d79f2e47b20ed77786b46714daf05087030aeffffcca3",
+        "version": "041d70242b96d3d9a60fd75db64a144c15193d48529c3c472ea80a7aafa679cd",
         "signature": "9fc7f7b6ad854404973b8cba8e6d883f758237991968e9a3965d716d46f1da88"
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -4128,7 +4124,7 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../src/orders/paypal-payment/paypal-payment.service.ts": [
+      "../src/orders/paypal-payment.service.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../src/orders/order.model.ts",
         "../src/products/products.service.ts",
@@ -4144,7 +4140,7 @@
         "../src/decorators/user.decorator.ts",
         "../src/orders/order.model.ts",
         "../src/products/products.service.ts",
-        "../src/orders/paypal-payment/paypal-payment.service.ts",
+        "../src/orders/paypal-payment.service.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -4157,15 +4153,7 @@
         "../src/orders/order.controller.ts",
         "../src/orders/order.service.ts",
         "../src/products/product.module.ts",
-        "../src/orders/paypal-payment/paypal-payment.service.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../src/paypal/paypal.controller.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../src/orders/paypal-payment/paypal-payment.service.ts",
+        "../src/orders/paypal-payment.service.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -4182,8 +4170,7 @@
         "../node_modules/dotenv/types/index.d.ts",
         "../src/categories/category.module.ts",
         "../src/orders/order.module.ts",
-        "../src/paypal/paypal.controller.ts",
-        "../src/orders/paypal-payment/paypal-payment.service.ts",
+        "../src/orders/paypal-payment.service.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -7211,21 +7198,18 @@
         "../node_modules/@types/mongoose/index.d.ts",
         "../src/orders/order.model.ts"
       ],
-      "../src/orders/paypal-payment/paypal-payment.service.ts": [
+      "../src/orders/paypal-payment.service.ts": [
         "../src/products/products.service.ts",
         "../src/orders/order.model.ts"
       ],
       "../src/orders/order.controller.ts": [
         "../src/orders/order.service.ts",
         "../src/products/products.service.ts",
-        "../src/orders/paypal-payment/paypal-payment.service.ts",
+        "../src/orders/paypal-payment.service.ts",
         "../src/orders/order.model.ts"
       ],
       "../src/orders/order.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts"
-      ],
-      "../src/paypal/paypal.controller.ts": [
-        "../src/orders/paypal-payment/paypal-payment.service.ts"
       ],
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -8194,8 +8178,10 @@
       "../src/categories/category.controller.ts",
       "../src/categories/category.module.ts",
       "../src/orders/order.model.ts",
-      "../src/orders/paypal-payment/paypal-payment.service.ts",
-      "../src/paypal/paypal.controller.ts",
+      "../src/orders/order.service.ts",
+      "../src/orders/paypal-payment.service.ts",
+      "../src/orders/order.module.ts",
+      "../src/app.module.ts",
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts",
       "../node_modules/@nestjs/core/adapters/index.d.ts",
       "../node_modules/@nestjs/core/injector/module-token-factory.d.ts",
@@ -8280,10 +8266,7 @@
       "../node_modules/@types/webpack/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
       "../node_modules/@types/yargs/index.d.ts",
-      "../src/orders/order.service.ts",
-      "../src/orders/order.module.ts",
-      "../src/orders/order.controller.ts",
-      "../src/app.module.ts"
+      "../src/orders/order.controller.ts"
     ]
   },
   "version": "3.8.3"

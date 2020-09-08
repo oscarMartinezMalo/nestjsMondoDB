@@ -16,8 +16,7 @@ const auth_module_1 = require("./auth/auth.module");
 const dotenv = require("dotenv");
 const category_module_1 = require("./categories/category.module");
 const order_module_1 = require("./orders/order.module");
-const paypal_controller_1 = require("./paypal/paypal.controller");
-const paypal_payment_service_1 = require("./orders/paypal-payment/paypal-payment.service");
+const paypal_payment_service_1 = require("./orders/paypal-payment.service");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -32,7 +31,7 @@ AppModule = __decorate([
             common_1.HttpModule,
             mongoose_1.MongooseModule.forRoot(process.env.DB_CONNECT)
         ],
-        controllers: [app_controller_1.AppController, paypal_controller_1.PaypalController],
+        controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, paypal_payment_service_1.PaypalPaymentService],
     })
 ], AppModule);

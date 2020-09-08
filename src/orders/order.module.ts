@@ -6,7 +6,7 @@ import { OrderService } from "./order.service";
 import { ProductModule } from "src/products/product.module";
 
 // import { AuthMiddleware } from "src/middlewares/auth.middleware";
-import { PaypalPaymentService } from './paypal-payment/paypal-payment.service';
+import { PaypalPaymentService } from './paypal-payment.service';
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: 'Order', schema: OrderSchema }]),

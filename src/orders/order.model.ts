@@ -8,7 +8,10 @@ export const OrderSchema = new mongoose.Schema({
         name: { type: String },
         address: { type: String },
         apartment: { type: String },
+        zipCode: { type: String },
         city: { type: String },
+        state: { type: String },
+        country: { type: String },
     },
     items: [{
         product: {

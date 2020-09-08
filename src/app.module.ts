@@ -8,8 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
 import { CategoryModule } from './categories/category.module';
 import { OrderModule } from './orders/order.module';
-import { PaypalController } from './paypal/paypal.controller';
-import { PaypalPaymentService } from './orders/paypal-payment/paypal-payment.service';
+// import { PaypalController } from './paypal/paypal.controller';
+import { PaypalPaymentService } from './orders/paypal-payment.service';
 // import * as paypal  from "paypal-rest-sdk";
 // import * as paypal from "@paypal/checkout-server-sdk";
 
@@ -36,7 +36,7 @@ dotenv.config();
       // Enviroment Variable handled through dotenv npm package( file name .env)
       process.env.DB_CONNECT
     )],
-  controllers: [AppController, PaypalController],
+  controllers: [AppController],
   providers: [AppService, PaypalPaymentService],
 })
 export class AppModule { }

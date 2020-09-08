@@ -12,7 +12,7 @@ const mongoose_1 = require("@nestjs/mongoose");
 const order_controller_1 = require("./order.controller");
 const order_service_1 = require("./order.service");
 const product_module_1 = require("../products/product.module");
-const paypal_payment_service_1 = require("./paypal-payment/paypal-payment.service");
+const paypal_payment_service_1 = require("./paypal-payment.service");
 let OrderModule = class OrderModule {
     configure(consumer) {
     }
