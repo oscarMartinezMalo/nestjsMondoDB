@@ -72,5 +72,4 @@ export class OrderController {
         const orderDetails = await this.orderService.getOrderById(orderId);
         return orderDetails;
     }
-
 }
