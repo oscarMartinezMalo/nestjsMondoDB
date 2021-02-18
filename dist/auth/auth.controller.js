@@ -33,6 +33,10 @@ let AuthController = class AuthController {
         const token = await this.authService.logIn(completeBody.email, completeBody.password);
         return token;
     }
+    async resetPassword(completeBody, user) {
+        const token = await this.authService.resetPassword(user, completeBody.currentPassword, completeBody.newPassword);
+        return token;
+    }
     async resfreshToken(refreshToken) {
         const refToken = Object.values(refreshToken)[0];
         const token = this.authService.getNewAccessToken(refToken);
@@ -67,6 +71,15 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "logIn", null);
+__decorate([
+    common_1.Post('resetPassword'),
+    common_1.UseGuards(new auth_guard_1.AuthGuard()),
+    __param(0, common_1.Body()),
+    __param(1, user_decorator_1.User()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "resetPassword", null);
 __decorate([
     common_1.Post('refresh-token'),
     __param(0, common_1.Body()),

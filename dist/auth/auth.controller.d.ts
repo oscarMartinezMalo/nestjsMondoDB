@@ -27,6 +27,19 @@ export declare class AuthController {
         email: string;
         role: string;
     }>;
+    resetPassword(completeBody: {
+        currentPassword: string;
+        newPassword: string;
+    }, user: {
+        id: string;
+        email: string;
+    }): Promise<{
+        accessToken: any;
+        refreshToken: any;
+        id: string;
+        email: string;
+        role: string;
+    }>;
     resfreshToken(refreshToken: any): Promise<{
         accessToken: any;
     }>;

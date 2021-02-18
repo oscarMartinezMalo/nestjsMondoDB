@@ -32,6 +32,15 @@ export class AuthController {
         return token;
     }
 
+    // I have to implement the current validation 
+    @Post('resetPassword')
+    @UseGuards(new AuthGuard())
+    async resetPassword(@Body() completeBody: { currentPassword: string, newPassword: string },
+                        @User() user: { id: string, email: string }) {
+        const token = await this.authService.resetPassword(user, completeBody.currentPassword, completeBody.newPassword);
+        return token;
+    }
+    
     @Post('refresh-token')
     async resfreshToken(@Body() refreshToken) {
         // async resfreshToken(@Headers('JWT_TOKEN') refreshToken: any) {

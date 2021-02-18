@@ -52,6 +52,26 @@ let AuthService = class AuthService {
         this.saveRefreshToken(refreshToken);
         return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email, role: userStored.role };
     }
+    async resetPassword(user, currentPassword, newPassword) {
+        const userStored = await this.userModel.findById(user.id);
+        if (!userStored) {
+            throw new common_1.ForbiddenException('User no exits');
+        }
+        const validPass = await bcrypt.compare(currentPassword, userStored.password);
+        if (!validPass) {
+            throw new common_1.ForbiddenException('Wrong Password try again!!!');
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        const result = await userStored.updateOne({ password: hashedPassword });
+        if (!result) {
+            throw new common_1.ForbiddenException('Wrong Password try again!!!');
+        }
+        const accessToken = this.generateAccessToken(userStored.id, userStored.email, userStored.role);
+        const refreshToken = jwt.sign({ user: { id: userStored.id, email: userStored.email, role: userStored.role } }, process.env.REFRESH_TOKEN_SECRET);
+        this.saveRefreshToken(refreshToken);
+        return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email, role: userStored.role };
+    }
     async saveRefreshToken(token) {
         const newRefreshToken = new this.tokenModel({ token: token });
         await newRefreshToken.save();

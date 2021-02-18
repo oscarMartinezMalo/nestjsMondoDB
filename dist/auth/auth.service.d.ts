@@ -13,6 +13,16 @@ export declare class AuthService {
         email: string;
         role: string;
     }>;
+    resetPassword(user: {
+        id: string;
+        email: string;
+    }, currentPassword: string, newPassword: string): Promise<{
+        accessToken: any;
+        refreshToken: any;
+        id: string;
+        email: string;
+        role: string;
+    }>;
     saveRefreshToken(token: string): Promise<void>;
     getNewAccessToken(refreshToken: string): Promise<{
         accessToken: any;

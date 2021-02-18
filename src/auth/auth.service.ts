@@ -55,6 +55,32 @@ export class AuthService {
         return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email, role: userStored.role };
     }
 
+    async resetPassword(user: { id: string, email: string }, currentPassword: string, newPassword: string){
+        // CHECK IF THE USER EXIST IN THE DATABASE
+        const userStored = await this.userModel.findById(user.id);
+        if (!userStored) { throw new ForbiddenException('User no exits'); }
+
+        // CHECK IF CURRENT PASSWORD IS CORRECT
+        const validPass = await bcrypt.compare(currentPassword, userStored.password);
+        if (!validPass) { throw new ForbiddenException('Wrong Password try again!!!'); }
+
+        // UPDATE THE PASSWORD WITH NEW PASSWORD 
+                //HASH THE PASSWORD
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+                // UPDATE USER PASSWORD
+                const result = await userStored.updateOne({password: hashedPassword});
+                if (!result) { throw new ForbiddenException('Wrong Password try again!!!'); }
+
+                // GENERATE NEW TOKEN AND REFRESH TOKEN
+                const accessToken = this.generateAccessToken(userStored.id, userStored.email, userStored.role);
+                const refreshToken = jwt.sign({ user: { id: userStored.id, email: userStored.email, role: userStored.role } }, process.env.REFRESH_TOKEN_SECRET);
+        
+                this.saveRefreshToken(refreshToken); // Store refresh token in the dataBase
+                return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email, role: userStored.role };
+    }
+
     async saveRefreshToken(token: string) {
         const newRefreshToken = new this.tokenModel({ token: token });
         await newRefreshToken.save();
