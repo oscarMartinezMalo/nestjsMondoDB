@@ -1,6 +1,6 @@
 import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards, Delete, Param } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { registerValidationSchema, loginValidationSchema } from "./auth-joi.validation";
+import { registerValidationSchema, loginValidationSchema, refreshPasswordValidationSchema } from "./auth-joi.validation";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
 import { User } from "src/decorators/user.decorator";
 import { AuthGuard } from "src/guards/auth.guard";
@@ -32,15 +32,15 @@ export class AuthController {
         return token;
     }
 
-    // I have to implement the current validation 
     @Post('resetPassword')
     @UseGuards(new AuthGuard())
+    @UsePipes(new JoiValidationPipe(refreshPasswordValidationSchema))
     async resetPassword(@Body() completeBody: { currentPassword: string, newPassword: string },
                         @User() user: { id: string, email: string }) {
         const token = await this.authService.resetPassword(user, completeBody.currentPassword, completeBody.newPassword);
         return token;
     }
-    
+
     @Post('refresh-token')
     async resfreshToken(@Body() refreshToken) {
         // async resfreshToken(@Headers('JWT_TOKEN') refreshToken: any) {

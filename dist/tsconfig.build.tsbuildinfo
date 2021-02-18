@@ -1210,11 +1210,11 @@
         "signature": "814a436063a09c92d8dfe45a87d98601eea6911a7ea17a7faf9569b957b92cb5"
       },
       "../src/auth/auth-joi.validation.ts": {
-        "version": "3d87ac4ca90a5aefb70de38560f0389bb2f521f5e0a237ed44e85624f5ffafc4",
-        "signature": "22ff3cc16ea54a17c701f0b7ac96ba73d0265b61e654f0fd2fa7ce506cd5cb38"
+        "version": "7560d5eaf89a2949ada48cdecccf36ce9b3d06f754640b545dbf81996525050f",
+        "signature": "dfff40c0e4bfd76e6ef5d9a6f073bccca9fb1ce7bd570c6314fb961af11f987e"
       },
       "../src/auth/auth.controller.ts": {
-        "version": "b8c032476d0e58d00c3f6274e302bece0e0a24b0ee9b1c7cec730ac6537e0bc8",
+        "version": "7fc42306606cbbfdf24c7c99641a77e638eef70f42fa36311cc3ef128b128382",
         "signature": "59aac4fe065a342d4678e01835732b3073cba9f16eb1b5b40296f54c272294e1"
       },
       "../src/auth/auth.module.ts": {
@@ -8166,7 +8166,6 @@
       "../node_modules/@types/bcryptjs/index.d.ts",
       "../src/auth/token.model.ts",
       "../src/auth/user.model.ts",
-      "../src/auth/auth-joi.validation.ts",
       "../node_modules/dotenv/types/index.d.ts",
       "../src/categories/category.model.ts",
       "../src/categories/category.service.ts",

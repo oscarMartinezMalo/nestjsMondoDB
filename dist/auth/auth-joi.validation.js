@@ -19,4 +19,12 @@ exports.loginValidationSchema = Joi.object({
         .min(6)
         .required()
 });
+exports.refreshPasswordValidationSchema = Joi.object({
+    currentPassword: Joi.string()
+        .min(7)
+        .required(),
+    newPassword: Joi.string()
+        .min(7)
+        .required()
+});
 //# sourceMappingURL=auth-joi.validation.js.map

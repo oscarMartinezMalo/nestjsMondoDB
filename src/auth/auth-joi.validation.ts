@@ -21,3 +21,13 @@ export const loginValidationSchema = Joi.object({
         .min(6)
         .required()
 });
+
+// Reset Password Validation
+export const refreshPasswordValidationSchema = Joi.object({
+    currentPassword: Joi.string()
+        .min(6)
+        .required(),
+    newPassword: Joi.string()
+        .min(6)
+        .required()
+});
