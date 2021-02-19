@@ -1210,7 +1210,7 @@
         "signature": "814a436063a09c92d8dfe45a87d98601eea6911a7ea17a7faf9569b957b92cb5"
       },
       "../src/auth/auth-joi.validation.ts": {
-        "version": "7560d5eaf89a2949ada48cdecccf36ce9b3d06f754640b545dbf81996525050f",
+        "version": "82cccf70bb35a3fafb13bd5d62f6371568bb9edbd104dcc0f5631682e29773ee",
         "signature": "dfff40c0e4bfd76e6ef5d9a6f073bccca9fb1ce7bd570c6314fb961af11f987e"
       },
       "../src/auth/auth.controller.ts": {

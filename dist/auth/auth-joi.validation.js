@@ -21,10 +21,10 @@ exports.loginValidationSchema = Joi.object({
 });
 exports.refreshPasswordValidationSchema = Joi.object({
     currentPassword: Joi.string()
-        .min(7)
+        .min(6)
         .required(),
     newPassword: Joi.string()
-        .min(7)
+        .min(6)
         .required()
 });
 //# sourceMappingURL=auth-joi.validation.js.map
