@@ -40,6 +40,11 @@ export declare class AuthController {
         email: string;
         role: string;
     }>;
+    forgotPassword(completeBody: {
+        email: string;
+    }): Promise<{
+        message: string;
+    }>;
     resfreshToken(refreshToken: any): Promise<{
         accessToken: any;
     }>;

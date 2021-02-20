@@ -5,6 +5,9 @@ import * as bcrypt from "bcryptjs";
 import * as  jwt from 'jsonwebtoken';
 import { Token } from "./token.model";
 import { User } from "./user.model";
+import { MailgunService } from "@nextnm/nestjs-mailgun";
+import { EmailOptions } from "./email.model";
+
 
 @Injectable()
 export class AuthService {
@@ -13,7 +16,7 @@ export class AuthService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
         @InjectModel('Token') private readonly tokenModel: Model<Token>,
-
+        private mailgunService: MailgunService
     ) { }
 
     async createAccount(email: string, password: string) {
@@ -79,6 +82,25 @@ export class AuthService {
         
                 this.saveRefreshToken(refreshToken); // Store refresh token in the dataBase
                 return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email, role: userStored.role };
+    }
+
+    async forgotPassword(email: string) {
+        const user = await this.userModel.findOne({ email: email });
+        if (!user) { throw new ForbiddenException('User not found'); };
+
+        const token = jwt.sign({ user: { id: user.id } }, process.env.RESET_PASSWORD_TOKEN_SECRET, {expiresIn:'10m'});
+
+        const emailBody: EmailOptions = {
+            from: 'noreply@gmail.com',
+            to: 'ommalor@gmail.com',
+            subject: 'Account Activation Link',
+            html: `
+                <h2>Please click on given link to activate your account</h2>
+                <p>${process.env.CLIENT_URL}/forgot-password-token/${token} </p>
+            `
+        }
+
+        await this.mailgunService.sendEmail(emailBody);
     }
 
     async saveRefreshToken(token: string) {

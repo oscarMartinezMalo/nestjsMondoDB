@@ -1,10 +1,12 @@
 import { Model } from "mongoose";
 import { Token } from "./token.model";
 import { User } from "./user.model";
+import { MailgunService } from "@nextnm/nestjs-mailgun";
 export declare class AuthService {
     private readonly userModel;
     private readonly tokenModel;
-    constructor(userModel: Model<User>, tokenModel: Model<Token>);
+    private mailgunService;
+    constructor(userModel: Model<User>, tokenModel: Model<Token>, mailgunService: MailgunService);
     createAccount(email: string, password: string): Promise<string>;
     logIn(email: string, password: string): Promise<{
         accessToken: any;
@@ -23,6 +25,7 @@ export declare class AuthService {
         email: string;
         role: string;
     }>;
+    forgotPassword(email: string): Promise<void>;
     saveRefreshToken(token: string): Promise<void>;
     getNewAccessToken(refreshToken: string): Promise<{
         accessToken: any;

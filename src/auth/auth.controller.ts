@@ -4,6 +4,7 @@ import { registerValidationSchema, loginValidationSchema, refreshPasswordValidat
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
 import { User } from "src/decorators/user.decorator";
 import { AuthGuard } from "src/guards/auth.guard";
+import { string } from "@hapi/joi";
 
 @Controller('auth')
 export class AuthController {
@@ -39,6 +40,12 @@ export class AuthController {
                         @User() user: { id: string, email: string }) {
         const token = await this.authService.resetPassword(user, completeBody.currentPassword, completeBody.newPassword);
         return token;
+    }
+
+    @Post('forgotPassword')
+    async forgotPassword(@Body() completeBody: { email: string}) {
+        await this.authService.forgotPassword(completeBody.email);
+        return { message: 'A verfication code was send to you!!!' };
     }
 
     @Post('refresh-token')

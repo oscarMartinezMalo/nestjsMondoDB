@@ -17,10 +17,12 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nestjs_mailgun_1 = require("@nextnm/nestjs-mailgun");
 let AuthService = class AuthService {
-    constructor(userModel, tokenModel) {
+    constructor(userModel, tokenModel, mailgunService) {
         this.userModel = userModel;
         this.tokenModel = tokenModel;
+        this.mailgunService = mailgunService;
     }
     async createAccount(email, password) {
         const userExits = await this.userModel.findOne({ email: email });
@@ -72,6 +74,24 @@ let AuthService = class AuthService {
         this.saveRefreshToken(refreshToken);
         return { accessToken: accessToken, refreshToken: refreshToken, id: userStored.id, email: userStored.email, role: userStored.role };
     }
+    async forgotPassword(email) {
+        const user = await this.userModel.findOne({ email: email });
+        if (!user) {
+            throw new common_1.ForbiddenException('User not found');
+        }
+        ;
+        const token = jwt.sign({ user: { id: user.id } }, process.env.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: '10m' });
+        const emailBody = {
+            from: 'noreply@gmail.com',
+            to: 'ommalor@gmail.com',
+            subject: 'Account Activation Link',
+            html: `
+                <h2>Please click on given link to activate your account</h2>
+                <p>${process.env.CLIENT_URL}/forgot-password-token/${token} </p>
+            `
+        };
+        await this.mailgunService.sendEmail(emailBody);
+    }
     async saveRefreshToken(token) {
         const newRefreshToken = new this.tokenModel({ token: token });
         await newRefreshToken.save();
@@ -107,7 +127,8 @@ AuthService = __decorate([
     __param(0, mongoose_1.InjectModel('User')),
     __param(1, mongoose_1.InjectModel('Token')),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model])
+        mongoose_2.Model,
+        nestjs_mailgun_1.MailgunService])
 ], AuthService);
 exports.AuthService = AuthService;
 //# sourceMappingURL=auth.service.js.map
