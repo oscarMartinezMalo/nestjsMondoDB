@@ -1226,7 +1226,7 @@
         "signature": "b3e0cb14e57e108e45c8486d573c599223049a3e0111f10133a98af97bd77237"
       },
       "../src/auth/auth.service.ts": {
-        "version": "21d6ea0e77f01b300182e8fef89286f1e90b1364c40adbd4bc49d8239d17cefc",
+        "version": "813c6bb8f6dc54438ecd65658b57b16a30120d43a7fd48c927d39354d75169cc",
         "signature": "326ddc2bc48ff926154ab4d2c4a81af0ceb24325ad28960b276163b0f45290ee"
       },
       "../src/auth/auth-joi.validation.ts": {

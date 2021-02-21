@@ -102,20 +102,19 @@ let AuthService = class AuthService {
         }
     }
     async forgotPasswordToken(email, newPassword, resetToken) {
-        const result = jwt.verify(resetToken, process.env.RESET_PASSWORD_TOKEN_SECRET);
-        if (!result) {
-            throw new common_1.UnauthorizedException('Incorrent token or it is expired');
+        try {
+            await jwt.verify(resetToken, process.env.RESET_PASSWORD_TOKEN_SECRET);
+        }
+        catch (error) {
+            throw new common_1.UnauthorizedException('Token invalid or expired');
         }
         const user = await this.userModel.findOne({ resetToken });
         if (!user || user.email !== email) {
-            throw new common_1.ForbiddenException('Token was already used or is invalid');
+            throw new common_1.ForbiddenException('Token invalid, or wrong email');
         }
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(newPassword, salt);
-        const userUpdated = await user.updateOne({
-            password: hashedPassword,
-            resetToken: ''
-        });
+        const userUpdated = await user.updateOne({ password: hashedPassword, resetToken: '' });
         if (!userUpdated) {
             throw new common_1.InternalServerErrorException('Something went wrong, password was not updated');
         }

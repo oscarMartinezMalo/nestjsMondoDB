@@ -39,7 +39,7 @@ let AuthController = class AuthController {
     }
     async forgotPassword(completeBody) {
         await this.authService.forgotPassword(completeBody.email);
-        return { message: 'A verfication code was send to you!!!' };
+        return { message: 'A link to reset your password has been sent to your email!!!' };
     }
     async forgotPasswordToken(completeBody) {
         await this.authService.forgotPasswordToken(completeBody.email, completeBody.newPassword, completeBody.forgotPasswordToken);
