@@ -39,7 +39,11 @@ let AuthController = class AuthController {
     }
     async forgotPassword(completeBody) {
         await this.authService.forgotPassword(completeBody.email);
-        return { message: 'A verfication code was send to you.' };
+        return { message: 'A verfication code was send to you!!!' };
+    }
+    async forgotPasswordToken(completeBody) {
+        await this.authService.forgotPasswordToken(completeBody.email, completeBody.newPassword, completeBody.forgotPasswordToken);
+        return { message: 'Password was successfully reset!!!' };
     }
     async resfreshToken(refreshToken) {
         const refToken = Object.values(refreshToken)[0];
@@ -76,7 +80,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "logIn", null);
 __decorate([
-    common_1.Post('resetPassword'),
+    common_1.Put('resetPassword'),
     common_1.UseGuards(new auth_guard_1.AuthGuard()),
     common_1.UsePipes(new joi_validation_pipe_1.JoiValidationPipe(auth_joi_validation_1.refreshPasswordValidationSchema)),
     __param(0, common_1.Body()),
@@ -86,12 +90,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "resetPassword", null);
 __decorate([
-    common_1.Post('forgotPassword'),
+    common_1.Put('forgotPassword'),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "forgotPassword", null);
+__decorate([
+    common_1.Put('forgotPasswordToken'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "forgotPasswordToken", null);
 __decorate([
     common_1.Post('refresh-token'),
     __param(0, common_1.Body()),

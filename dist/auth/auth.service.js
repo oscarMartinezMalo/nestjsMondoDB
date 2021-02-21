@@ -83,14 +83,42 @@ let AuthService = class AuthService {
         const token = jwt.sign({ user: { id: user.id } }, process.env.RESET_PASSWORD_TOKEN_SECRET, { expiresIn: '10m' });
         const emailBody = {
             from: 'noreply@gmail.com',
-            to: 'ommalor@gmail.com',
+            to: email,
             subject: 'Account Activation Link',
             html: `
-                <h2>Please click on given link to activate your account</h2>
+                <h2>Please click on given link to reset your password</h2>
                 <p>${process.env.CLIENT_URL}/forgot-password-token/${token} </p>
             `
         };
-        await this.mailgunService.sendEmail(emailBody);
+        const result = await user.updateOne({ resetToken: token });
+        if (!result) {
+            throw new common_1.InternalServerErrorException('Something went wrong');
+        }
+        try {
+            const result = await this.mailgunService.sendEmail(emailBody);
+        }
+        catch (error) {
+            throw new common_1.InternalServerErrorException('Something went wrong, Email was not delivered');
+        }
+    }
+    async forgotPasswordToken(email, newPassword, resetToken) {
+        const result = jwt.verify(resetToken, process.env.RESET_PASSWORD_TOKEN_SECRET);
+        if (!result) {
+            throw new common_1.UnauthorizedException('Incorrent token or it is expired');
+        }
+        const user = await this.userModel.findOne({ resetToken });
+        if (!user || user.email !== email) {
+            throw new common_1.ForbiddenException('Token was already used or is invalid');
+        }
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        const userUpdated = await user.updateOne({
+            password: hashedPassword,
+            resetToken: ''
+        });
+        if (!userUpdated) {
+            throw new common_1.InternalServerErrorException('Something went wrong, password was not updated');
+        }
     }
     async saveRefreshToken(token) {
         const newRefreshToken = new this.tokenModel({ token: token });

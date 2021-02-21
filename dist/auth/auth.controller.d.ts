@@ -45,6 +45,13 @@ export declare class AuthController {
     }): Promise<{
         message: string;
     }>;
+    forgotPasswordToken(completeBody: {
+        email: string;
+        newPassword: string;
+        forgotPasswordToken: string;
+    }): Promise<{
+        message: string;
+    }>;
     resfreshToken(refreshToken: any): Promise<{
         accessToken: any;
     }>;

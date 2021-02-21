@@ -6,4 +6,5 @@ export interface User extends mongoose.Document {
     role: string;
     password: string;
     date: string;
+    resetToken?: string;
 }

@@ -1,4 +1,4 @@
-import { Injectable, ForbiddenException, NotFoundException } from "@nestjs/common";
+import { Injectable, ForbiddenException, NotFoundException, InternalServerErrorException, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import * as bcrypt from "bcryptjs";
@@ -7,6 +7,7 @@ import { Token } from "./token.model";
 import { User } from "./user.model";
 import { MailgunService } from "@nextnm/nestjs-mailgun";
 import { EmailOptions } from "./email.model";
+import { Console } from "console";
 
 
 @Injectable()
@@ -22,9 +23,7 @@ export class AuthService {
     async createAccount(email: string, password: string) {
         // CHECK IF THE USER EXIST IN THE DATABASE
         const userExits = await this.userModel.findOne({ email: email });
-        if (userExits) {
-            throw new ForbiddenException('User already exits');
-        }
+        if (userExits) { throw new ForbiddenException('User already exits'); }
 
         //HASH THE PASSWORD
         const salt = await bcrypt.genSalt(10);
@@ -92,15 +91,41 @@ export class AuthService {
 
         const emailBody: EmailOptions = {
             from: 'noreply@gmail.com',
-            to: 'ommalor@gmail.com',
+            to: email,
             subject: 'Account Activation Link',
             html: `
-                <h2>Please click on given link to activate your account</h2>
+                <h2>Please click on given link to reset your password</h2>
                 <p>${process.env.CLIENT_URL}/forgot-password-token/${token} </p>
             `
         }
 
-        await this.mailgunService.sendEmail(emailBody);
+        const result = await user.updateOne({resetToken: token})
+        if (!result) { throw new InternalServerErrorException('Something went wrong'); }
+
+        try {
+            const result = await this.mailgunService.sendEmail(emailBody);
+        } catch (error) {
+            throw new InternalServerErrorException('Something went wrong, Email was not delivered');
+        }
+    }
+
+    async forgotPasswordToken(email: string, newPassword: string, resetToken: string) {
+        const result = jwt.verify(resetToken, process.env.RESET_PASSWORD_TOKEN_SECRET);
+        if(!result) { throw new UnauthorizedException('Incorrent token or it is expired');}
+
+        const user = await this.userModel.findOne({resetToken});
+        if(!user || user.email !== email) { throw new ForbiddenException('Token was already used or is invalid');}
+
+        // UPDATE THE PASSWORD WITH NEW PASSWORD 
+        //HASH THE PASSWORD
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        const userUpdated = await user.updateOne({
+            password: hashedPassword,
+            resetToken: ''
+        });
+        if (!userUpdated) { throw new InternalServerErrorException('Something went wrong, password was not updated'); }
     }
 
     async saveRefreshToken(token: string) {

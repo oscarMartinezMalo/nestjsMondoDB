@@ -26,6 +26,7 @@ export declare class AuthService {
         role: string;
     }>;
     forgotPassword(email: string): Promise<void>;
+    forgotPasswordToken(email: string, newPassword: string, resetToken: string): Promise<void>;
     saveRefreshToken(token: string): Promise<void>;
     getNewAccessToken(refreshToken: string): Promise<{
         accessToken: any;

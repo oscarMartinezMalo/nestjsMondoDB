@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards, Delete, Param } from "@nestjs/common";
+import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards, Delete, Param, Put } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { registerValidationSchema, loginValidationSchema, refreshPasswordValidationSchema } from "./auth-joi.validation";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
@@ -33,7 +33,7 @@ export class AuthController {
         return token;
     }
 
-    @Post('resetPassword')
+    @Put('resetPassword')
     @UseGuards(new AuthGuard())
     @UsePipes(new JoiValidationPipe(refreshPasswordValidationSchema))
     async resetPassword(@Body() completeBody: { currentPassword: string, newPassword: string },
@@ -42,10 +42,16 @@ export class AuthController {
         return token;
     }
 
-    @Post('forgotPassword')
+    @Put('forgotPassword')
     async forgotPassword(@Body() completeBody: { email: string}) {
         await this.authService.forgotPassword(completeBody.email);
         return { message: 'A verfication code was send to you!!!' };
+    }
+
+    @Put('forgotPasswordToken')
+    async forgotPasswordToken(@Body() completeBody: { email: string, newPassword:string, forgotPasswordToken: string}) {
+        await this.authService.forgotPasswordToken(completeBody.email, completeBody.newPassword, completeBody.forgotPasswordToken);
+        return { message: 'Password was successfully reset!!!' };
     }
 
     @Post('refresh-token')
