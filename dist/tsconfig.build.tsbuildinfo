@@ -902,11 +902,11 @@
         "signature": "abec56db8d9e8c0be53354ab0f3e6bc5a888ea005f32e43f9893ae1e49360db7"
       },
       "../src/app.service.ts": {
-        "version": "803775a060b9247545b690164c21501462d582f2219a25ee1d0490977c9cf41f",
+        "version": "620c29e0e0482c69c6da22502a7ba7b2d694cc5fae0954bf64f7ee4779b6c367",
         "signature": "d8f4cb0109c1b399d657807fd6af504d74a9300325e0fc915abdbf658b464a97"
       },
       "../src/app.controller.ts": {
-        "version": "3469c5aa62e1ba5b183d9bb9d40193e91aa761fc5734d332650b0bd49c346266",
+        "version": "260f889b9e2b69f77be1155348eb345166aec664b3efff6720053c6844a41f28",
         "signature": "3293b0d1d6a7f902316e164fcf36ae099f1bbb0224484586eaab30d9dea78d32"
       },
       "../node_modules/@types/node/globals.d.ts": {
@@ -1270,7 +1270,7 @@
         "signature": "cd7eaee640eeca9c291365e8685e46f76aee7e0988141d417da014953dd49411"
       },
       "../src/orders/paypal-payment.service.ts": {
-        "version": "1fd17af77a168c57d5717e1c9cd545be3decc5041e5780c6ab25a3761174d27d",
+        "version": "198ca4e70fa4dc6740350faf12e1586ee3c82328349283de8a3a43b2fbeadeb4",
         "signature": "6eb04956da52ed338b0b8669db9444e1a46a87bbc48fc20b2e95cc08bd21d2cb"
       },
       "../src/orders/order.controller.ts": {
@@ -1282,7 +1282,7 @@
         "signature": "a994fec04e63533d1ead259bf2ed3e10e60030f994e5c8a150915ec592407463"
       },
       "../src/app.module.ts": {
-        "version": "baa8d05471033a385aecdf9b95b3416e79ce9a8ab5e88a1417a7491052c89f26",
+        "version": "87e432a9b27d8189ecd79113de7922b3c6f032c0b20b9648d93aba2717720e60",
         "signature": "9fc7f7b6ad854404973b8cba8e6d883f758237991968e9a3965d716d46f1da88"
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -1430,7 +1430,7 @@
         "signature": "7b5ed961a0e03965299591d73de8b8c41e8a68105ff4fc07a240b0dfb94a5a3d"
       },
       "../src/main.ts": {
-        "version": "58b033d0f61716a13dac3e0d38d651bf0230850f9a9d8cc4ab5f037a54fd6e4c",
+        "version": "4ddb9402d42c4e60e8aa09e58d4be999ef3e845784bf041d33301330fbae8e75",
         "signature": "f761c91419d0a89422a0004ef1a92929dd4d2d5e5c16758654d8b0467d1998c6"
       },
       "../node_modules/@types/range-parser/index.d.ts": {
@@ -7224,38 +7224,6 @@
       "../src/auth/user.model.ts": [
         "../node_modules/@types/mongoose/index.d.ts"
       ],
-      "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts": [
-        "../node_modules/@nestjs/common/interfaces/index.d.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/services/relay/mailgun.service.d.ts": [
-        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/mailgun.module.d.ts": [
-        "../node_modules/@nestjs/common/index.d.ts",
-        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts",
-        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/services/relay/mailgun.service.d.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../node_modules/@nextnm/nestjs-mailgun/dist/index.d.ts": [
-        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/mailgun.module.d.ts",
-        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts",
-        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/services/relay/mailgun.service.d.ts",
-        "../node_modules/@types/node/fs.d.ts",
-        "../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../node_modules/@types/node/util.d.ts",
-        "../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "../src/auth/auth.service.ts": [
         "../node_modules/@types/mongoose/index.d.ts",
         "../src/auth/user.model.ts",
@@ -7957,6 +7925,38 @@
       ],
       "../node_modules/@types/yargs/index.d.ts": [
         "../node_modules/@types/yargs-parser/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts": [
+        "../node_modules/@nestjs/common/interfaces/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nextnm/nestjs-mailgun/dist/index.d.ts": [
+        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/mailgun.module.d.ts",
+        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts",
+        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/services/relay/mailgun.service.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/mailgun.module.d.ts": [
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts",
+        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/services/relay/mailgun.service.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/services/relay/mailgun.service.d.ts": [
+        "../node_modules/@nextnm/nestjs-mailgun/dist/nestjs-mailgun/configuration.d.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
