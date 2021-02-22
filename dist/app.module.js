@@ -17,6 +17,7 @@ const dotenv = require("dotenv");
 const category_module_1 = require("./categories/category.module");
 const order_module_1 = require("./orders/order.module");
 const paypal_payment_service_1 = require("./orders/paypal-payment.service");
+const nestjs_mailgun_1 = require("@nextnm/nestjs-mailgun");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -29,10 +30,15 @@ AppModule = __decorate([
             order_module_1.OrderModule,
             auth_module_1.AuthModule,
             common_1.HttpModule,
-            mongoose_1.MongooseModule.forRoot(process.env.DB_CONNECT)
+            mongoose_1.MongooseModule.forRoot(process.env.DB_CONNECT),
+            nestjs_mailgun_1.MailgunModule.forRoot({
+                DOMAIN: process.env.MAILGUN_DOMAIN,
+                API_KEY: process.env.MAILGUN_API_KEY
+            })
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, paypal_payment_service_1.PaypalPaymentService],
+        exports: [nestjs_mailgun_1.MailgunModule]
     })
 ], AppModule);
 exports.AppModule = AppModule;

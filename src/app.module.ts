@@ -10,6 +10,7 @@ import { CategoryModule } from './categories/category.module';
 import { OrderModule } from './orders/order.module';
 // import { PaypalController } from './paypal/paypal.controller';
 import { PaypalPaymentService } from './orders/paypal-payment.service';
+import { MailgunModule } from '@nextnm/nestjs-mailgun';
 // import * as paypal  from "paypal-rest-sdk";
 // import * as paypal from "@paypal/checkout-server-sdk";
 
