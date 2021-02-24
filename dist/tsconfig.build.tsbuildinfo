@@ -1242,7 +1242,7 @@
         "signature": "c9ae0b351a07b52f29a28e869d8c7c8d29743bbb5eeddc7c0b5b2a69a2450528"
       },
       "../src/auth/auth.module.ts": {
-        "version": "740909433d404bc8852120d5afa53dd011f89ecf4c3be0e5725885743d841acc",
+        "version": "7dab1c4c241039e5f39f404730a5b863f34aa08973a065121337bbb091116be0",
         "signature": "2e5d258cf85349b02b015c3f1b8873c152d182c3819a7ccc3aff16fc3037a5fc"
       },
       "../src/categories/category.model.ts": {
@@ -1262,27 +1262,31 @@
         "signature": "1c7e5b4bfafd7feb46a5d617dc37e772cb29488191df74bfcb875daec9b89759"
       },
       "../src/orders/order.model.ts": {
-        "version": "ff29f3e3e7d4d8a0adf982025d152fd87899de3fe94d1795aa65be82e054ae5e",
-        "signature": "5876324a1b8c52831c79526ddfb5618659d9d30e4af8f8f425ffa4acaef3929d"
+        "version": "50c1e60838e5b3bff9077012898274eabded2f9486e4f12986ff33ba5a29ff2f",
+        "signature": "7947b892a8a0dfc1217dd9be75b59ed5185a605d59802dfcd2fecd845b74552d"
       },
       "../src/orders/order.service.ts": {
         "version": "0030f6a552d1ce74843f65edd9f9c958e16578129b034df818bfb6b6d80b6102",
         "signature": "cd7eaee640eeca9c291365e8685e46f76aee7e0988141d417da014953dd49411"
       },
+      "../src/common/paypalclient .ts": {
+        "version": "5ee9a6bd8400886089bd68317b6cd47f82f643db362a6665d7def2d32482a42c",
+        "signature": "c5dbf5775dbdaa970781884c59f5156e1a8133af08d8b69be6176f35df52fef9"
+      },
       "../src/orders/paypal-payment.service.ts": {
-        "version": "1fd17af77a168c57d5717e1c9cd545be3decc5041e5780c6ab25a3761174d27d",
-        "signature": "6eb04956da52ed338b0b8669db9444e1a46a87bbc48fc20b2e95cc08bd21d2cb"
+        "version": "857f8567344b594362f8eb712f7e3d94073f5c540a36b132c533cc6e8870e936",
+        "signature": "f1b846114af0834f9919e07c07c49e30adcf99be79f4d180102a8d1c2c47e673"
       },
       "../src/orders/order.controller.ts": {
-        "version": "38ea4b473222f2d47af60f51ac6963034afd77fff98fb382e4e738b3546eecc0",
-        "signature": "2106a82cd6370f239f7f937a5307d2b0f8ad79bd079cdf45d05eafbccc9a4aba"
+        "version": "25bd172d9b8e7eb3266a37754de6aec1f5aafec5700fcf807f1d088ed251a79b",
+        "signature": "6db6350bcecf4856f0211c44562e5f092752eb3051c3cab2c142c290c08d6663"
       },
       "../src/orders/order.module.ts": {
         "version": "5b6b8850d3dd7048f5df3c850dd3a2902635dee936fcc9e856030449508b9117",
         "signature": "a994fec04e63533d1ead259bf2ed3e10e60030f994e5c8a150915ec592407463"
       },
       "../src/app.module.ts": {
-        "version": "6c6d1e2de0a71c178c7c842f8abb07e23f523a0d3d8cd9a4c2490eddd17ae5d2",
+        "version": "3fc8f220eaaf5f6b55549eb2118f79c20af07544a8dec08c4ec4742f18077297",
         "signature": "9fc7f7b6ad854404973b8cba8e6d883f758237991968e9a3965d716d46f1da88"
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -4188,10 +4192,18 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../src/common/paypalclient .ts": [
+        "../node_modules/dotenv/types/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../src/orders/paypal-payment.service.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../src/orders/order.model.ts",
         "../src/products/products.service.ts",
+        "../src/common/paypalclient .ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -4205,6 +4217,7 @@
         "../src/orders/order.model.ts",
         "../src/products/products.service.ts",
         "../src/orders/paypal-payment.service.ts",
+        "../src/common/paypalclient .ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -8268,9 +8281,6 @@
       "../src/categories/category.service.ts",
       "../src/categories/category.controller.ts",
       "../src/categories/category.module.ts",
-      "../src/orders/order.model.ts",
-      "../src/orders/order.service.ts",
-      "../src/orders/order.module.ts",
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts",
       "../node_modules/@nestjs/core/adapters/index.d.ts",
       "../node_modules/@nestjs/core/injector/module-token-factory.d.ts",

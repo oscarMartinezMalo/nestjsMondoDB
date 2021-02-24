@@ -4,7 +4,7 @@ export declare class PaypalPaymentService {
     private readonly productService;
     private orderId;
     constructor(productService: ProductService);
-    captureOrder(orderId: any): Promise<boolean>;
+    captureOrder(orderID: any): Promise<boolean>;
     paypalCheckOut(completeBody: Order): Promise<{
         intent: string;
         application_context: {

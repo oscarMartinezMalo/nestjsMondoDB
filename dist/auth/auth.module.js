@@ -21,9 +21,7 @@ AuthModule = __decorate([
     common_1.Module({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_model_1.UserSchema }, { name: 'Token', schema: token_model_1.TokenSchema }]),
-            nestjs_mailgun_1.MailgunModule.forRoot({
-                DOMAIN: process.env.MAILGUN_DOMAIN,
-                API_KEY: process.env.MAILGUN_API_KEY
+            nestjs_mailgun_1.MailgunModule.forRoot({ DOMAIN: process.env.MAILGUN_DOMAIN, API_KEY: process.env.MAILGUN_API_KEY
             })
         ],
         controllers: [auth_controller_1.AuthController],

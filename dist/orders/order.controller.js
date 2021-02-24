@@ -24,7 +24,7 @@ let OrderController = class OrderController {
         this.productService = productService;
         this.paypalService = paypalService;
     }
-    async addProduct(completeBody) {
+    async addOrder(completeBody) {
         const captureSuccess = await this.paypalService.captureOrder(completeBody.paypalOrderID);
         if (captureSuccess) {
             const generatedId = await this.orderService
@@ -63,7 +63,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], OrderController.prototype, "addProduct", null);
+], OrderController.prototype, "addOrder", null);
 __decorate([
     common_1.Post('paypal-order'),
     common_1.UseGuards(new auth_guard_1.AuthGuard()),

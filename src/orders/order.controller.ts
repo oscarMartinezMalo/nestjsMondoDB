@@ -8,6 +8,7 @@ import { Order, OrderItem } from "./order.model";
 import { ProductService } from "src/products/products.service";
 import * as checkoutNodeJssdk from "@paypal/checkout-server-sdk";
 import { PaypalPaymentService } from "./paypal-payment.service";
+import * as payPalClient  from '../common/payPalClient ';
 
 @Controller('orders')
 export class OrderController {
@@ -17,12 +18,11 @@ export class OrderController {
 
     @Post()
     @UseGuards(new AuthGuard())
-    async addProduct(
+    async addOrder(
         @Body() completeBody: Order
     ) {  
-        // throw new BadRequestException('There is something wrong with this order');
-        // Check if the total ammount front the order is the same as the order ammount
         const captureSuccess = await this.paypalService.captureOrder(completeBody.paypalOrderID); 
+
         if( captureSuccess ) {
             const generatedId = await this.orderService
             .insertOrder(completeBody.userId, completeBody.paypalOrderID, completeBody.shipping, completeBody.datePlaced, completeBody.items);

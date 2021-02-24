@@ -12,15 +12,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const checkoutNodeJssdk = require("@paypal/checkout-server-sdk");
 const products_service_1 = require("../products/products.service");
+const payPalClient = require("../common/payPalClient ");
 let PaypalPaymentService = class PaypalPaymentService {
     constructor(productService) {
         this.productService = productService;
     }
-    async captureOrder(orderId) {
-        const environment = new checkoutNodeJssdk.core.SandboxEnvironment('ASFFab1yjnV6n-pKnMLfhURx2O7sHUM8wYBfTztwGP0UH4TuTMDjTk0X2G06XjUFcCatr95BMudLYUB-', 'EIk0gpDTqIe4E4wuMiOHOG9y0WOp5OAq1R2Ampe3GirlMrUGMueqZk2rlVBY7TD5A4qJG5JnY8pesOe4');
-        const client = new checkoutNodeJssdk.core.PayPalHttpClient(environment);
-        const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
+    async captureOrder(orderID) {
+        const client = new checkoutNodeJssdk.core.PayPalHttpClient(payPalClient.client());
+        const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
         const response = await client.execute(request);
+        let requestt = new checkoutNodeJssdk.orders.OrdersGetRequest(orderID);
+        let order;
+        try {
+            order = await client.execute(requestt);
+        }
+        catch (err) {
+            console.error(err);
+        }
         return response.statusCode === 201 ? true : false;
     }
     async paypalCheckOut(completeBody) {

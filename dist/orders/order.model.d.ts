@@ -2,11 +2,24 @@ import * as mongoose from 'mongoose';
 export declare const OrderSchema: mongoose.Schema<any>;
 export interface Order extends mongoose.Document {
     id?: string;
+    status: string;
+    billingAddress: BillingAddress;
     paypalOrderID?: string;
     userId: string;
     shipping: Shipping;
     datePlaced: string;
     items: OrderItem[];
+}
+interface BillingAddress {
+    firstName: string;
+    lastName: string;
+    streetAddress: string;
+    aptSuit: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    phone: number;
+    email: string;
 }
 interface Shipping {
     name: string;

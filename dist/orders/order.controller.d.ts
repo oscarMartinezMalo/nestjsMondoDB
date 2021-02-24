@@ -7,7 +7,7 @@ export declare class OrderController {
     private readonly productService;
     private paypalService;
     constructor(orderService: OrderService, productService: ProductService, paypalService: PaypalPaymentService);
-    addProduct(completeBody: Order): Promise<{
+    addOrder(completeBody: Order): Promise<{
         orderPaidID: string;
     }>;
     getPaypalOrder(completeBody: Order): Promise<{

@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import * as checkoutNodeJssdk from "@paypal/checkout-server-sdk";
 import { Order } from './order.model';
 import { ProductService } from 'src/products/products.service';
+import * as payPalClient  from '../common/payPalClient ';
 
 
 @Injectable()
@@ -14,14 +15,12 @@ export class PaypalPaymentService {
         ) { }
 
     // Process the order having the order ID
-    async captureOrder(orderId) {
-        const environment = new checkoutNodeJssdk.core.SandboxEnvironment(
-            'ASFFab1yjnV6n-pKnMLfhURx2O7sHUM8wYBfTztwGP0UH4TuTMDjTk0X2G06XjUFcCatr95BMudLYUB-',
-            'EIk0gpDTqIe4E4wuMiOHOG9y0WOp5OAq1R2Ampe3GirlMrUGMueqZk2rlVBY7TD5A4qJG5JnY8pesOe4');
-        const client = new checkoutNodeJssdk.core.PayPalHttpClient(environment);
+    async captureOrder(orderID) {
+        const client = new checkoutNodeJssdk.core.PayPalHttpClient(payPalClient.client());
 
-        const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderId);
+        const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
         const response = await client.execute(request);
+
         return response.statusCode === 201 ? true : false;
     }
 
