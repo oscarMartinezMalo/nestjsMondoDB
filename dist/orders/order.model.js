@@ -5,15 +5,10 @@ exports.OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     paypalOrderID: { type: String, required: true },
     datePlaced: { type: String, required: true },
-    billingAddress: {
-        firstName: String,
+    billingPayer: {
+        paypalId: String,
+        firtName: String,
         lastName: String,
-        streetAddress: String,
-        aptSuit: String,
-        city: String,
-        state: String,
-        zipCode: String,
-        phone: String,
         email: String,
     },
     shipping: {
@@ -24,6 +19,8 @@ exports.OrderSchema = new mongoose.Schema({
         city: { type: String },
         state: { type: String },
         country: { type: String },
+        phone: { type: Number },
+        email: { type: String },
     },
     items: [{
             product: {

@@ -4,15 +4,10 @@ export const OrderSchema = new mongoose.Schema({
     userId: { type: String, required: true},
     paypalOrderID: { type: String, required: true },
     datePlaced: { type: String, required: true },
-    billingAddress: {
-        firstName: String,
+    billingPayer: {
+        paypalId: String,
+        firtName: String,
         lastName: String,
-        streetAddress: String,
-        aptSuit: String,
-        city: String,
-        state: String,
-        zipCode: String,
-        phone: String,
         email: String,
     },
     shipping: { 
@@ -23,6 +18,8 @@ export const OrderSchema = new mongoose.Schema({
         city: { type: String },
         state: { type: String },
         country: { type: String },
+        phone:  { type: Number },
+        email: { type: String },
     },
     items: [{
         product: {
@@ -38,7 +35,7 @@ export const OrderSchema = new mongoose.Schema({
 export interface Order extends mongoose.Document {
     id?: string;
     status: string;
-    billingAddress: BillingAddress
+    billingAddress: BillingPayer
     paypalOrderID?: string;
     userId: string;
     shipping: Shipping;
@@ -46,19 +43,14 @@ export interface Order extends mongoose.Document {
     items: OrderItem[];
 }
 
-interface  BillingAddress{
-    firstName: string;
+export interface  BillingPayer{
+    paypalId: string;
+    firtName: string;
     lastName: string;
-    streetAddress: string;
-    aptSuit: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    phone: number;
     email: string;
 }
 
-interface Shipping {
+export interface Shipping {
     name: string;
     address: string;
     apartment: string;
@@ -66,6 +58,8 @@ interface Shipping {
     city: string;
     state: string;
     country: string;
+    phone: number;
+    email: string;
 }
 
 export interface OrderItem {

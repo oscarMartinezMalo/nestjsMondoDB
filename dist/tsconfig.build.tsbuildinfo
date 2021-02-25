@@ -1241,8 +1241,12 @@
         "version": "c9ae0b351a07b52f29a28e869d8c7c8d29743bbb5eeddc7c0b5b2a69a2450528",
         "signature": "c9ae0b351a07b52f29a28e869d8c7c8d29743bbb5eeddc7c0b5b2a69a2450528"
       },
+      "../src/common/mailgunconfig.ts": {
+        "version": "07a0fc1ac1dbd5a956375f7e4aca1ca28eaedd99978a12af80f10f6a6edd1219",
+        "signature": "9d94f4ad74ebb6dda37ef6b0494ec8b4865676ecb3e0bcc0661eff744ecae94a"
+      },
       "../src/auth/auth.module.ts": {
-        "version": "7dab1c4c241039e5f39f404730a5b863f34aa08973a065121337bbb091116be0",
+        "version": "87df6d3b363b7003bc5c09428f7e1dcd03da6de91879854909eeada8e38bd288",
         "signature": "2e5d258cf85349b02b015c3f1b8873c152d182c3819a7ccc3aff16fc3037a5fc"
       },
       "../src/categories/category.model.ts": {
@@ -1262,23 +1266,23 @@
         "signature": "1c7e5b4bfafd7feb46a5d617dc37e772cb29488191df74bfcb875daec9b89759"
       },
       "../src/orders/order.model.ts": {
-        "version": "50c1e60838e5b3bff9077012898274eabded2f9486e4f12986ff33ba5a29ff2f",
-        "signature": "7947b892a8a0dfc1217dd9be75b59ed5185a605d59802dfcd2fecd845b74552d"
+        "version": "12f556ed711ef73d013404c92acd7e8155463ad808c3236de388c0d5c2c7ad32",
+        "signature": "0d125105c0ca0ed853471412c82bfd3251101832d009bc79accca5074d70f321"
       },
       "../src/orders/order.service.ts": {
-        "version": "0030f6a552d1ce74843f65edd9f9c958e16578129b034df818bfb6b6d80b6102",
-        "signature": "cd7eaee640eeca9c291365e8685e46f76aee7e0988141d417da014953dd49411"
+        "version": "a7bc78004bd4d5439828a1b61ecd47115c4a405fbe803e61b047c4f0b590d6f8",
+        "signature": "d971fa9d23152c8dc51b63f568896ecd3d3f55c7c564d5f461a740d139af9992"
       },
       "../src/common/paypalclient .ts": {
         "version": "5ee9a6bd8400886089bd68317b6cd47f82f643db362a6665d7def2d32482a42c",
         "signature": "c5dbf5775dbdaa970781884c59f5156e1a8133af08d8b69be6176f35df52fef9"
       },
       "../src/orders/paypal-payment.service.ts": {
-        "version": "857f8567344b594362f8eb712f7e3d94073f5c540a36b132c533cc6e8870e936",
-        "signature": "f1b846114af0834f9919e07c07c49e30adcf99be79f4d180102a8d1c2c47e673"
+        "version": "555fd79ead3d87e09af38c7f320914c01a0458b24a4dd67c1f28fd1abdcefe91",
+        "signature": "8551ae51b42412b92774b4668df3ed06367948bae0a23cb18a18cf94c1211fdb"
       },
       "../src/orders/order.controller.ts": {
-        "version": "25bd172d9b8e7eb3266a37754de6aec1f5aafec5700fcf807f1d088ed251a79b",
+        "version": "35b6cc080ad5da4a717c56bf2a130e23cce57a371402b49f21f530a54a3d21ed",
         "signature": "6db6350bcecf4856f0211c44562e5f092752eb3051c3cab2c142c290c08d6663"
       },
       "../src/orders/order.module.ts": {
@@ -4124,6 +4128,13 @@
         "../node_modules/@types/node/util.d.ts",
         "../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../src/common/mailgunconfig.ts": [
+        "../node_modules/dotenv/types/index.d.ts",
+        "../node_modules/@types/node/fs.d.ts",
+        "../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../node_modules/@types/node/util.d.ts",
+        "../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../src/auth/auth.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../src/auth/auth.controller.ts",
@@ -4133,6 +4144,7 @@
         "../src/auth/token.model.ts",
         "../node_modules/@nextnm/nestjs-mailgun/dist/index.d.ts",
         "../node_modules/dotenv/types/index.d.ts",
+        "../src/common/mailgunconfig.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -4204,6 +4216,7 @@
         "../src/orders/order.model.ts",
         "../src/products/products.service.ts",
         "../src/common/paypalclient .ts",
+        "../src/orders/order.service.ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",
@@ -4217,7 +4230,6 @@
         "../src/orders/order.model.ts",
         "../src/products/products.service.ts",
         "../src/orders/paypal-payment.service.ts",
-        "../src/common/paypalclient .ts",
         "../node_modules/@types/node/fs.d.ts",
         "../node_modules/@types/node/ts3.2/fs.d.ts",
         "../node_modules/@types/node/util.d.ts",

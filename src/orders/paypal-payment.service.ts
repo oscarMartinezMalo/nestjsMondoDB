@@ -1,27 +1,40 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as checkoutNodeJssdk from "@paypal/checkout-server-sdk";
-import { Order } from './order.model';
+import { BillingPayer, Order } from './order.model';
 import { ProductService } from 'src/products/products.service';
 import * as payPalClient  from '../common/payPalClient ';
-
+import { OrderService } from './order.service';
 
 @Injectable()
 export class PaypalPaymentService {
     private orderId: string;
 
-    constructor(private readonly productService: ProductService,
+    constructor(
+        private readonly productService: ProductService
         // private readonly httpService: HttpService
         ) { }
 
     // Process the order having the order ID
-    async captureOrder(orderID) {
+    async captureOrder(orderID): Promise<BillingPayer> {
         const client = new checkoutNodeJssdk.core.PayPalHttpClient(payPalClient.client());
-
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
-        const response = await client.execute(request);
 
-        return response.statusCode === 201 ? true : false;
+        try {
+            const capture = await client.execute(request);
+
+            if (capture.statusCode !== 201) { throw new InternalServerErrorException('Something went wrong capturing the Order');}
+
+            let payerInfo = {} as BillingPayer; 
+            payerInfo.paypalId = capture.result.purchase_units[0].payments.captures[0].id;
+            payerInfo.firtName = capture.result.payer.name.given_name;
+            payerInfo.lastName = capture.result.payer.name.surname;
+            payerInfo.email= capture.result.payer.email_address;
+            return payerInfo;
+
+          } catch (err) {        
+            throw new InternalServerErrorException('Something went wrong capturing the Order');           
+          }
     }
 
     async paypalCheckOut(completeBody: Order) {      

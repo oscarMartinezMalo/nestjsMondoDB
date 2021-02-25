@@ -20,16 +20,21 @@ let PaypalPaymentService = class PaypalPaymentService {
     async captureOrder(orderID) {
         const client = new checkoutNodeJssdk.core.PayPalHttpClient(payPalClient.client());
         const request = new checkoutNodeJssdk.orders.OrdersCaptureRequest(orderID);
-        const response = await client.execute(request);
-        let requestt = new checkoutNodeJssdk.orders.OrdersGetRequest(orderID);
-        let order;
         try {
-            order = await client.execute(requestt);
+            const capture = await client.execute(request);
+            if (capture.statusCode !== 201) {
+                throw new common_1.InternalServerErrorException('Something went wrong capturing the Order');
+            }
+            let payerInfo = {};
+            payerInfo.paypalId = capture.result.purchase_units[0].payments.captures[0].id;
+            payerInfo.firtName = capture.result.payer.name.given_name;
+            payerInfo.lastName = capture.result.payer.name.surname;
+            payerInfo.email = capture.result.payer.email_address;
+            return payerInfo;
         }
         catch (err) {
-            console.error(err);
+            throw new common_1.InternalServerErrorException('Something went wrong capturing the Order');
         }
-        return response.statusCode === 201 ? true : false;
     }
     async paypalCheckOut(completeBody) {
         return await this.buildRequestBody(completeBody);

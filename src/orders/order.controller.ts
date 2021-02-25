@@ -1,18 +1,15 @@
 import { Controller, Post, Body, Get, Param, UseGuards, BadRequestException } from "@nestjs/common";
 import { OrderService } from "./order.service";
-// import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
-// import { ProductValidationSchema } from "./product-joi.validation";
 import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
-import { Order, OrderItem } from "./order.model";
+import { Order } from "./order.model";
 import { ProductService } from "src/products/products.service";
-import * as checkoutNodeJssdk from "@paypal/checkout-server-sdk";
 import { PaypalPaymentService } from "./paypal-payment.service";
-import * as payPalClient  from '../common/payPalClient ';
 
 @Controller('orders')
 export class OrderController {
-    constructor(private readonly orderService: OrderService,
+    constructor(
+        private readonly orderService: OrderService,
         private readonly productService: ProductService,
         private paypalService: PaypalPaymentService) { }
 
@@ -21,13 +18,14 @@ export class OrderController {
     async addOrder(
         @Body() completeBody: Order
     ) {  
-        const captureSuccess = await this.paypalService.captureOrder(completeBody.paypalOrderID); 
+        // Capture the Order and get the Payer Information
+        const billingPayer = await this.paypalService.captureOrder(completeBody.paypalOrderID); 
 
-        if( captureSuccess ) {
-            const generatedId = await this.orderService
-            .insertOrder(completeBody.userId, completeBody.paypalOrderID, completeBody.shipping, completeBody.datePlaced, completeBody.items);
+        if( billingPayer ) {
+            // Save the Order in the DataBase
+            const generatedId = await this.orderService.insertOrder(completeBody.userId, completeBody.paypalOrderID, billingPayer, 
+                                                                    completeBody.shipping, completeBody.datePlaced, completeBody.items);
             return { orderPaidID: generatedId };
-
         } else {
             throw new BadRequestException('There is something wrong with this order');
         }
@@ -40,9 +38,6 @@ export class OrderController {
     ) {
         const resp = await this.paypalService.paypalCheckOut(completeBody);
         return resp;
-        // const generatedId = await this.orderService
-        // .insertOrder(completeBody.userId, completeBody.shipping, completeBody.datePlaced, completeBody.items);
-        // return { id: generatedId };
     }
 
     @Get('execute-order/:orderId')

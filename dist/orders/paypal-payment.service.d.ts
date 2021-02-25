@@ -1,10 +1,10 @@
-import { Order } from './order.model';
+import { BillingPayer, Order } from './order.model';
 import { ProductService } from 'src/products/products.service';
 export declare class PaypalPaymentService {
     private readonly productService;
     private orderId;
     constructor(productService: ProductService);
-    captureOrder(orderID: any): Promise<boolean>;
+    captureOrder(orderID: any): Promise<BillingPayer>;
     paypalCheckOut(completeBody: Order): Promise<{
         intent: string;
         application_context: {

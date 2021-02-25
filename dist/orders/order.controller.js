@@ -25,10 +25,9 @@ let OrderController = class OrderController {
         this.paypalService = paypalService;
     }
     async addOrder(completeBody) {
-        const captureSuccess = await this.paypalService.captureOrder(completeBody.paypalOrderID);
-        if (captureSuccess) {
-            const generatedId = await this.orderService
-                .insertOrder(completeBody.userId, completeBody.paypalOrderID, completeBody.shipping, completeBody.datePlaced, completeBody.items);
+        const billingPayer = await this.paypalService.captureOrder(completeBody.paypalOrderID);
+        if (billingPayer) {
+            const generatedId = await this.orderService.insertOrder(completeBody.userId, completeBody.paypalOrderID, billingPayer, completeBody.shipping, completeBody.datePlaced, completeBody.items);
             return { orderPaidID: generatedId };
         }
         else {

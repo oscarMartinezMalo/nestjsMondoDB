@@ -14,6 +14,7 @@ const user_model_1 = require("./user.model");
 const token_model_1 = require("./token.model");
 const nestjs_mailgun_1 = require("@nextnm/nestjs-mailgun");
 const dotenv = require("dotenv");
+const mailGunConfig = require("../common/mailGunConfig");
 dotenv.config();
 let AuthModule = class AuthModule {
 };
@@ -21,8 +22,7 @@ AuthModule = __decorate([
     common_1.Module({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_model_1.UserSchema }, { name: 'Token', schema: token_model_1.TokenSchema }]),
-            nestjs_mailgun_1.MailgunModule.forRoot({ DOMAIN: process.env.MAILGUN_DOMAIN, API_KEY: process.env.MAILGUN_API_KEY
-            })
+            nestjs_mailgun_1.MailgunModule.forRoot(mailGunConfig.mailGun())
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService],

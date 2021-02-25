@@ -3,25 +3,20 @@ export declare const OrderSchema: mongoose.Schema<any>;
 export interface Order extends mongoose.Document {
     id?: string;
     status: string;
-    billingAddress: BillingAddress;
+    billingAddress: BillingPayer;
     paypalOrderID?: string;
     userId: string;
     shipping: Shipping;
     datePlaced: string;
     items: OrderItem[];
 }
-interface BillingAddress {
-    firstName: string;
+export interface BillingPayer {
+    paypalId: string;
+    firtName: string;
     lastName: string;
-    streetAddress: string;
-    aptSuit: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    phone: number;
     email: string;
 }
-interface Shipping {
+export interface Shipping {
     name: string;
     address: string;
     apartment: string;
@@ -29,6 +24,8 @@ interface Shipping {
     city: string;
     state: string;
     country: string;
+    phone: number;
+    email: string;
 }
 export interface OrderItem {
     product: Product;
