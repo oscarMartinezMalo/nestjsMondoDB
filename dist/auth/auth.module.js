@@ -13,8 +13,8 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_model_1 = require("./user.model");
 const token_model_1 = require("./token.model");
 const nestjs_mailgun_1 = require("@nextnm/nestjs-mailgun");
-const dotenv = require("dotenv");
 const mailGunConfig = require("../common/mailGunConfig");
+const dotenv = require("dotenv");
 dotenv.config();
 let AuthModule = class AuthModule {
 };

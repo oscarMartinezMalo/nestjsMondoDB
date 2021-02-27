@@ -1,3 +1,4 @@
+/// <reference types="multer" />
 import { ProductService } from "./products.service";
 import { Product } from "./product.model";
 export declare class ProductsController {
@@ -6,6 +7,8 @@ export declare class ProductsController {
     addProduct(completeBody: Product): Promise<{
         id: string;
     }>;
+    uploadImages(completeBody: Product, files: Express.Multer.File): Promise<boolean>;
+    uploadOneImage(file: Express.Multer.File): Promise<boolean>;
     getAllProducts(): Promise<{
         id: string;
         title: string;

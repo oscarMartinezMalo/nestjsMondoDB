@@ -39,7 +39,7 @@ let AuthController = class AuthController {
     }
     async forgotPassword(completeBody) {
         await this.authService.forgotPassword(completeBody.email);
-        return { message: 'A link to reset your password has been sent to your email!!!' };
+        return { message: 'A verfication code was send to you!!!' };
     }
     async forgotPasswordToken(completeBody) {
         await this.authService.forgotPasswordToken(completeBody.email, completeBody.newPassword, completeBody.forgotPasswordToken);
@@ -91,6 +91,7 @@ __decorate([
 ], AuthController.prototype, "resetPassword", null);
 __decorate([
     common_1.Put('forgotPassword'),
+    common_1.UsePipes(new joi_validation_pipe_1.JoiValidationPipe(auth_joi_validation_1.forgotPasswordValidationSchema)),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

@@ -13,7 +13,7 @@ import { PaypalPaymentService } from './orders/paypal-payment.service';
 import { MailgunModule } from '@nextnm/nestjs-mailgun';
 // import * as paypal  from "paypal-rest-sdk";
 // import * as paypal from "@paypal/checkout-server-sdk";
-
+import { MulterModule } from '@nestjs/platform-express';
 dotenv.config();
 
 // paypal.configure({
@@ -34,6 +34,9 @@ dotenv.config();
     OrderModule,
     AuthModule,
     HttpModule,
+    MulterModule.register({
+      dest: './files',
+    }),
     MongooseModule.forRoot(
       // Enviroment Variable handled through dotenv npm package( file name .env)
       process.env.DB_CONNECT

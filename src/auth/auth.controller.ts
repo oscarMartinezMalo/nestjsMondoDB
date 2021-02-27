@@ -1,6 +1,6 @@
 import { Controller, Post, Body, UsePipes, Headers, Get, UseGuards, Delete, Param, Put } from "@nestjs/common";
 import { AuthService } from "./auth.service";
-import { registerValidationSchema, loginValidationSchema, refreshPasswordValidationSchema } from "./auth-joi.validation";
+import { registerValidationSchema, loginValidationSchema, refreshPasswordValidationSchema, forgotPasswordValidationSchema } from "./auth-joi.validation";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
 import { User } from "src/decorators/user.decorator";
 import { AuthGuard } from "src/guards/auth.guard";
@@ -43,6 +43,7 @@ export class AuthController {
     }
 
     @Put('forgotPassword')
+    @UsePipes(new JoiValidationPipe(forgotPasswordValidationSchema))
     async forgotPassword(@Body() completeBody: { email: string}) {
         await this.authService.forgotPassword(completeBody.email);
         return { message: 'A verfication code was send to you!!!' };

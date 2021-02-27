@@ -1,21 +1,49 @@
-import { Controller, Post, Body, Get, Param, Patch, Delete, UsePipes, Header, UseGuards } from "@nestjs/common";
+import { Controller, Post, Body, Get, Param, Patch, Delete, UsePipes, Header, UseGuards, UploadedFile, UploadedFiles, UseInterceptors } from "@nestjs/common";
 import { ProductService } from "./products.service";
 import { JoiValidationPipe } from "src/pipes/joi-validation.pipe";
 import { ProductValidationSchema } from "./product-joi.validation";
 import { AuthGuard } from "src/guards/auth.guard";
 import { User } from "src/decorators/user.decorator";
 import { Product } from "./product.model";
+import { FileInterceptor, FilesInterceptor, MulterModule } from '@nestjs/platform-express';
+import { diskStorage } from "multer";
 
 @Controller('products')
-export class ProductsController {
+export class ProductsController {    
     constructor(private readonly productServicer: ProductService) { }
 
+    // @UseInterceptors(FileInterceptor('file'))
     @Post()
-    @UsePipes(new JoiValidationPipe(ProductValidationSchema))
+    // @UsePipes(new JoiValidationPipe(ProductValidationSchema))
     @UseGuards(new AuthGuard())
-    async addProduct(@Body() completeBody: Product) {
+    async addProduct(
+        @Body() completeBody: Product,
+        // @UploadedFile() file: Express.Multer.File
+    ) {
+        // console.log(file);
         const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl);
         return { id: generatedId };
+    }
+
+    @UseInterceptors(
+        FilesInterceptor('files', 5, { storage: diskStorage({ destination: './files'}) })
+        )
+    @Post('files')
+    async uploadImages(
+        @Body() completeBody: Product,
+        @UploadedFiles() files: Express.Multer.File
+    ) {
+        console.log(files[0]);
+        return true;
+    }
+
+    @UseInterceptors(FileInterceptor('file'))
+    @Post('file')
+    async uploadOneImage(
+        @UploadedFile() file: Express.Multer.File
+    ) {
+        console.log(file);
+        return true;
     }
 
     @Get()
