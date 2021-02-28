@@ -1,9 +1,10 @@
+/// <reference types="multer" />
 import { Product } from "./product.model";
 import { Model } from "mongoose";
 export declare class ProductService {
     private readonly productModel;
     constructor(productModel: Model<Product>);
-    insertProduct(title: string, price: number, category: string, imageUrl: string): Promise<string>;
+    insertProduct(title: string, price: number, category: string, imageUrl: string, files: Express.Multer.File[]): Promise<string>;
     getProducts(): Promise<{
         id: string;
         title: string;

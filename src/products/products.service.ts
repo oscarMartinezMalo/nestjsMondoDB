@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { Product } from "./product.model";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
@@ -8,8 +8,16 @@ export class ProductService {
 
     constructor(@InjectModel('Product') private readonly productModel: Model<Product>) { }
 
-    async insertProduct(title: string, price: number, category: string, imageUrl: string) {
-        const newProduct = new this.productModel({ title, price, category, imageUrl });
+    async insertProduct(title: string, price: number, category: string, imageUrl: string, files:  Express.Multer.File[]) {
+        if(files.length <= 0) throw new BadRequestException('At least one Image is Required');
+        // Convert array of files to array of string path
+        let images = files.map(x => {
+            let originalnameArray = x.originalname.split('.');
+            let extension = originalnameArray[originalnameArray.length-1];
+            return x.filename + '.' + extension;
+        });  
+
+        const newProduct = new this.productModel({ title, price, category, imageUrl, images });
         const result = await newProduct.save();
         return result.id as string;
     }

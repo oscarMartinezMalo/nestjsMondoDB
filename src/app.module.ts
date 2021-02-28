@@ -8,23 +8,10 @@ import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv';
 import { CategoryModule } from './categories/category.module';
 import { OrderModule } from './orders/order.module';
-// import { PaypalController } from './paypal/paypal.controller';
 import { PaypalPaymentService } from './orders/paypal-payment.service';
-import { MailgunModule } from '@nextnm/nestjs-mailgun';
-// import * as paypal  from "paypal-rest-sdk";
-// import * as paypal from "@paypal/checkout-server-sdk";
-import { MulterModule } from '@nestjs/platform-express';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 dotenv.config();
-
-// paypal.configure({
-//   'mode': 'sandbox', //sandbox or live
-//   'client_id': 'ASFFab1yjnV6n-pKnMLfhURx2O7sHUM8wYBfTztwGP0UH4TuTMDjTk0X2G06XjUFcCatr95BMudLYUB-', //App Client ID
-//   'client_secret': 'EIk0gpDTqIe4E4wuMiOHOG9y0WOp5OAq1R2Ampe3GirlMrUGMueqZk2rlVBY7TD5A4qJG5JnY8pesOe4' //App Client ID
-// });
-
-
-// This sample uses SandboxEnvironment. In production, use LiveEnvironment
-
 
 @Module({
   imports: [
@@ -34,13 +21,12 @@ dotenv.config();
     OrderModule,
     AuthModule,
     HttpModule,
-    MulterModule.register({
-      dest: './files',
-    }),
-    MongooseModule.forRoot(
-      // Enviroment Variable handled through dotenv npm package( file name .env)
-      process.env.DB_CONNECT
-    )],
+    MongooseModule.forRoot(      
+      process.env.DB_CONNECT  // Enviroment Variable handled through dotenv npm package( file name .env)
+    ),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    })],
   controllers: [AppController],
   providers: [AppService, PaypalPaymentService],
 })

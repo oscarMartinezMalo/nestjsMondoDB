@@ -4,7 +4,7 @@ import { Product } from "./product.model";
 export declare class ProductsController {
     private readonly productServicer;
     constructor(productServicer: ProductService);
-    addProduct(completeBody: Product): Promise<{
+    addProduct(completeBody: Product, files: Express.Multer.File[]): Promise<{
         id: string;
     }>;
     uploadImages(completeBody: Product, files: Express.Multer.File): Promise<boolean>;

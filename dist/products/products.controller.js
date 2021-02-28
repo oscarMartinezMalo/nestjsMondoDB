@@ -15,16 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const products_service_1 = require("./products.service");
 const joi_validation_pipe_1 = require("../pipes/joi-validation.pipe");
+const product_joi_validation_1 = require("./product-joi.validation");
 const auth_guard_1 = require("../guards/auth.guard");
 const user_decorator_1 = require("../decorators/user.decorator");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
+const file_upload_utils_1 = require("../common/file-upload.utils");
 let ProductsController = class ProductsController {
     constructor(productServicer) {
         this.productServicer = productServicer;
     }
-    async addProduct(completeBody) {
-        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl);
+    async addProduct(completeBody, files) {
+        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl, files);
         return { id: generatedId };
     }
     async uploadImages(completeBody, files) {
@@ -52,15 +54,23 @@ let ProductsController = class ProductsController {
     }
 };
 __decorate([
+    common_1.UseInterceptors(platform_express_1.FilesInterceptor('files', 5, {
+        storage: multer_1.diskStorage({
+            destination: './public',
+            filename: file_upload_utils_1.editFileName,
+        }),
+        fileFilter: file_upload_utils_1.imageFileFilter,
+    })),
     common_1.Post(),
-    common_1.UseGuards(new auth_guard_1.AuthGuard()),
+    common_1.UsePipes(new joi_validation_pipe_1.JoiValidationPipe(product_joi_validation_1.ProductValidationSchema)),
     __param(0, common_1.Body()),
+    __param(1, common_1.UploadedFiles()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Array]),
     __metadata("design:returntype", Promise)
 ], ProductsController.prototype, "addProduct", null);
 __decorate([
-    common_1.UseInterceptors(platform_express_1.FilesInterceptor('files', 5, { storage: multer_1.diskStorage({ destination: './files' }) })),
+    common_1.UseInterceptors(platform_express_1.FilesInterceptor('files', 5, { storage: multer_1.diskStorage({ destination: './public' }) })),
     common_1.Post('files'),
     __param(0, common_1.Body()),
     __param(1, common_1.UploadedFiles()),

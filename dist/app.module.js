@@ -17,7 +17,8 @@ const dotenv = require("dotenv");
 const category_module_1 = require("./categories/category.module");
 const order_module_1 = require("./orders/order.module");
 const paypal_payment_service_1 = require("./orders/paypal-payment.service");
-const platform_express_1 = require("@nestjs/platform-express");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 dotenv.config();
 let AppModule = class AppModule {
 };
@@ -30,10 +31,10 @@ AppModule = __decorate([
             order_module_1.OrderModule,
             auth_module_1.AuthModule,
             common_1.HttpModule,
-            platform_express_1.MulterModule.register({
-                dest: './files',
-            }),
-            mongoose_1.MongooseModule.forRoot(process.env.DB_CONNECT)
+            mongoose_1.MongooseModule.forRoot(process.env.DB_CONNECT),
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: path_1.join(__dirname, '..', 'public'),
+            })
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, paypal_payment_service_1.PaypalPaymentService],
