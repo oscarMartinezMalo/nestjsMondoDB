@@ -23,12 +23,12 @@ export class ProductsController {
     }) )
     @Post()
     @UsePipes(new JoiValidationPipe(ProductValidationSchema))
-    // @UseGuards(new AuthGuard())
+    @UseGuards(new AuthGuard())
     async addProduct(
         @Body() completeBody: Product,
         @UploadedFiles() files: Express.Multer.File[]
     ) {
-        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl, files);
+        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, /*completeBody.imageUrl,*/ files);
         return { id: generatedId };
     }
 

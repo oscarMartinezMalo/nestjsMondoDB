@@ -26,7 +26,7 @@ let ProductsController = class ProductsController {
         this.productServicer = productServicer;
     }
     async addProduct(completeBody, files) {
-        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl, files);
+        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, files);
         return { id: generatedId };
     }
     async uploadImages(completeBody, files) {
@@ -63,6 +63,7 @@ __decorate([
     })),
     common_1.Post(),
     common_1.UsePipes(new joi_validation_pipe_1.JoiValidationPipe(product_joi_validation_1.ProductValidationSchema)),
+    common_1.UseGuards(new auth_guard_1.AuthGuard()),
     __param(0, common_1.Body()),
     __param(1, common_1.UploadedFiles()),
     __metadata("design:type", Function),

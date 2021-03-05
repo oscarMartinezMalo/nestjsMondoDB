@@ -1102,8 +1102,8 @@
         "signature": "a6a77971695d21f7d4d0cce1e4da110af66f7cafc746085407413e5fd1021915"
       },
       "../src/products/product.model.ts": {
-        "version": "d751f32444a5cc8d2dda2407e5d3e8f6af83a517fc9c199ed30637a91e72a750",
-        "signature": "998959887f2db871ef48a8f8c069c2f0e504eb463afe3a8142406f9e7b43de58"
+        "version": "8aa58dc41d597bab45403ddd565ae696fc887e7ba823bacdb035280c745f217f",
+        "signature": "3884c510bc25001a835d4183b2353ec641e0f74edcc8a0d4d4c62bd86f1840ef"
       },
       "../node_modules/@nestjs/mongoose/dist/common/mongoose.decorators.d.ts": {
         "version": "d6f8f5677b0e4076ff30fb38cefe5739f3247f4a311081a83aac4a7996b2224b",
@@ -1146,8 +1146,8 @@
         "signature": "8f1241f5d9f0d3d72117768b3c974e462840fbd85026fb66685078945404cf2f"
       },
       "../src/products/products.service.ts": {
-        "version": "dd168834bf058dfec586fb9a47f6108e88dc73b226f334c5ebf0fe5752a35093",
-        "signature": "7d7b3c0c2bb5926d412f2a898613add25a74f9789b37d1a2550ac3568028fe93"
+        "version": "2921e1ffef533fd5627ffb4b453271689fb8cc0ac52e4459016becf1e816c5fa",
+        "signature": "c92771453e57fc14db899364a42e366fb109495da356f035fab4fddff5b25482"
       },
       "../src/pipes/joi-validation.pipe.ts": {
         "version": "11306480aea4f4bdc2c913bb9ae408568084325054ba754d2e6276e69f589b99",
@@ -1158,7 +1158,7 @@
         "signature": "ba2a09adea4a585bea36a65fec00769d53bea7f498bee36c4c7f0e8b112e1113"
       },
       "../src/products/product-joi.validation.ts": {
-        "version": "28163a03f24c3587112ee11faab59d0558a820a726abbc90ee06ce75756e6a24",
+        "version": "cf9f2be3b38315f4340a81aa55e09b2d241b4128afc054d0c604e40f0e9ab068",
         "signature": "23a758f1762d1b2f3e50d1b4b6a17fda3a4cdd13915a62c4a8acc2123244b806"
       },
       "../src/guards/auth.guard.ts": {
@@ -1274,8 +1274,8 @@
         "signature": "0aab5a5d56db6d9591f2b8c4415d74a5f6a8f8be1d688389ed6f3dbcfa44ec91"
       },
       "../src/products/products.controller.ts": {
-        "version": "710c7754f8844a85fb52aeb0c8b5db9199f587a6d6021d94d2817f77281071cb",
-        "signature": "3dcdfee04264a21fae903b7109849958aae052c9ef577fbcae0236ebe7a42672"
+        "version": "236a81e624c6600748af8877be2e5f27cce643202d271d08e977134dc65fa2ad",
+        "signature": "26b8994cdbff7f5c893523b13e5a4c4b2b7c99f0f359f5aea6151265842f6d99"
       },
       "../src/products/product.module.ts": {
         "version": "57d593979545896d0ff8ea7830c26ad5f6087b95cf4cae22331030d49230ca09",
@@ -8850,7 +8850,6 @@
       "../node_modules/@nestjs/mongoose/dist/mongoose.module.d.ts",
       "../node_modules/@nestjs/mongoose/dist/index.d.ts",
       "../node_modules/@nestjs/mongoose/index.d.ts",
-      "../src/products/products.service.ts",
       "../src/pipes/joi-validation.pipe.ts",
       "../node_modules/@types/hapi__joi/index.d.ts",
       "../src/products/product-joi.validation.ts",
@@ -8882,7 +8881,6 @@
       "../node_modules/@types/express/index.d.ts",
       "../node_modules/@types/multer/index.d.ts",
       "../src/common/file-upload.utils.ts",
-      "../src/products/product.module.ts",
       "../src/shopping-carts/cart.model.ts",
       "../src/shopping-carts/cart.service.ts",
       "../src/shopping-carts/cart.controller.ts",
@@ -8908,9 +8906,6 @@
       "../src/orders/order.model.ts",
       "../src/orders/order.service.ts",
       "../src/common/paypalclient .ts",
-      "../src/orders/paypal-payment.service.ts",
-      "../src/orders/order.controller.ts",
-      "../src/orders/order.module.ts",
       "../node_modules/@nestjs/serve-static/dist/interfaces/serve-static-options.interface.d.ts",
       "../node_modules/@nestjs/core/adapters/index.d.ts",
       "../node_modules/@nestjs/core/injector/module-token-factory.d.ts",
@@ -8956,8 +8951,6 @@
       "../node_modules/@nestjs/serve-static/dist/serve-static.providers.d.ts",
       "../node_modules/@nestjs/serve-static/dist/index.d.ts",
       "../node_modules/@nestjs/serve-static/index.d.ts",
-      "../src/app.module.ts",
-      "../src/main.ts",
       "../src/middlewares/auth.middleware.ts",
       "../node_modules/@types/anymatch/index.d.ts",
       "../node_modules/@babel/types/lib/index.d.ts",
@@ -8998,7 +8991,14 @@
       "../node_modules/@types/webpack/index.d.ts",
       "../node_modules/@types/yargs-parser/index.d.ts",
       "../node_modules/@types/yargs/index.d.ts",
-      "../src/products/products.controller.ts"
+      "../src/products/products.service.ts",
+      "../src/orders/order.controller.ts",
+      "../src/orders/paypal-payment.service.ts",
+      "../src/products/product.module.ts",
+      "../src/products/products.controller.ts",
+      "../src/orders/order.module.ts",
+      "../src/app.module.ts",
+      "../src/main.ts"
     ]
   },
   "version": "3.8.3"

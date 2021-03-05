@@ -8,7 +8,7 @@ export class ProductService {
 
     constructor(@InjectModel('Product') private readonly productModel: Model<Product>) { }
 
-    async insertProduct(title: string, price: number, category: string, imageUrl: string, files:  Express.Multer.File[]) {
+    async insertProduct(title: string, price: number, category: string, /*imageUrl: string,*/ files:  Express.Multer.File[]) {
         if(files.length <= 0) throw new BadRequestException('At least one Image is Required');
         // Convert array of files to array of string path
         let images = files.map(x => {
@@ -17,7 +17,7 @@ export class ProductService {
             return x.filename + '.' + extension;
         });  
 
-        const newProduct = new this.productModel({ title, price, category, imageUrl, images });
+        const newProduct = new this.productModel({ title, price, category,/* imageUrl,*/ images });
         const result = await newProduct.save();
         return result.id as string;
     }
@@ -30,7 +30,7 @@ export class ProductService {
             title: prod.title,
             price: prod.price,
             category: prod.category,
-            imageUrl: prod.imageUrl
+            // imageUrl: prod.imageUrl
         }));
     }
 
@@ -41,7 +41,7 @@ export class ProductService {
             title: product.title,
             price: product.price,
             category: product.category,
-            imageUrl: product.imageUrl
+            // imageUrl: product.imageUrl
         };
     }
 
@@ -51,7 +51,7 @@ export class ProductService {
         if (title) { updateProduct.title = title; }
         if (price) { updateProduct.price = price; }
         if (category) { updateProduct.category = category; }
-        if (imageUrl) { updateProduct.imageUrl = imageUrl; }
+        // if (imageUrl) { updateProduct.imageUrl = imageUrl; }
 
         updateProduct.save();
     }

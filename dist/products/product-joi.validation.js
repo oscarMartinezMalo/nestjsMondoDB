@@ -11,8 +11,5 @@ exports.ProductValidationSchema = Joi.object({
     category: Joi.string()
         .min(3)
         .required(),
-    imageUrl: Joi.string()
-        .min(6)
-        .required()
 });
 //# sourceMappingURL=product-joi.validation.js.map

@@ -5,6 +5,5 @@ export interface Product extends mongoose.Document {
     title: string;
     price: number;
     category: string;
-    imageUrl: string;
     images: string[];
 }

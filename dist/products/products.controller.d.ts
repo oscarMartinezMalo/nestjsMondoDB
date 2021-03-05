@@ -14,14 +14,12 @@ export declare class ProductsController {
         title: string;
         price: number;
         category: string;
-        imageUrl: string;
     }[]>;
     getProduct(prodId: string): Promise<{
         id: string;
         title: string;
         price: number;
         category: string;
-        imageUrl: string;
     }>;
     updateProduct(prodId: string, prodTitle: string, prodPrice: number, prodCategory: string, prodImageUrl: string): Promise<any>;
     removeProduct(prodId: string): Promise<any>;
