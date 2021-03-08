@@ -8,16 +8,12 @@ export class ProductService {
 
     constructor(@InjectModel('Product') private readonly productModel: Model<Product>) { }
 
-    async insertProduct(title: string, price: number, category: string, /*imageUrl: string,*/ files:  Express.Multer.File[]) {
-        if(files.length <= 0) throw new BadRequestException('At least one Image is Required');
+    async insertProduct(title: string, price: number, category: string, imageUrl: string,/*files:  Express.Multer.File[]*/) {
+        // if(files.length <= 0) throw new BadRequestException('At least one Image is Required');
         // Convert array of files to array of string path
-        let images = files.map(x => {
-            let originalnameArray = x.originalname.split('.');
-            let extension = originalnameArray[originalnameArray.length-1];
-            return x.filename + '.' + extension;
-        });  
+        // let images = files.map(x => { return process.env.LOCAL_URL + x.filename; } );  
 
-        const newProduct = new this.productModel({ title, price, category,/* imageUrl,*/ images });
+        const newProduct = new this.productModel({ title, price, category, imageUrl,/* images */ });
         const result = await newProduct.save();
         return result.id as string;
     }
@@ -30,7 +26,8 @@ export class ProductService {
             title: prod.title,
             price: prod.price,
             category: prod.category,
-            // imageUrl: prod.imageUrl
+            // images: prod.images
+            imageUrl: prod.imageUrl
         }));
     }
 
@@ -41,17 +38,20 @@ export class ProductService {
             title: product.title,
             price: product.price,
             category: product.category,
-            // imageUrl: product.imageUrl
+            // images: product.images
+            imageUrl: product.imageUrl
         };
     }
 
-    async updateProduct(id: string, title: string, price: number, category: string, imageUrl: string) {
+    async updateProduct(id: string, title: string, price: number, category: string, imageUrl: string /*files:  Express.Multer.File[]*/) {
         const updateProduct = await this.findProduct(id);
 
         if (title) { updateProduct.title = title; }
         if (price) { updateProduct.price = price; }
         if (category) { updateProduct.category = category; }
-        // if (imageUrl) { updateProduct.imageUrl = imageUrl; }
+        if (imageUrl) { updateProduct.imageUrl = imageUrl; }
+        // let images = files.map(x => { return process.env.LOCAL_URL + x.filename; } ); 
+        // if( images ) { updateProduct.images = images }
 
         updateProduct.save();
     }

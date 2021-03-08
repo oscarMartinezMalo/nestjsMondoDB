@@ -18,24 +18,18 @@ const joi_validation_pipe_1 = require("../pipes/joi-validation.pipe");
 const product_joi_validation_1 = require("./product-joi.validation");
 const auth_guard_1 = require("../guards/auth.guard");
 const user_decorator_1 = require("../decorators/user.decorator");
-const platform_express_1 = require("@nestjs/platform-express");
-const multer_1 = require("multer");
 const file_upload_utils_1 = require("../common/file-upload.utils");
 let ProductsController = class ProductsController {
     constructor(productServicer) {
         this.productServicer = productServicer;
     }
-    async addProduct(completeBody, files) {
-        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, files);
+    async addProduct(completeBody) {
+        const generatedId = await this.productServicer.insertProduct(completeBody.title, completeBody.price, completeBody.category, completeBody.imageUrl);
         return { id: generatedId };
     }
-    async uploadImages(completeBody, files) {
-        console.log(files[0]);
-        return true;
-    }
-    async uploadOneImage(file) {
-        console.log(file);
-        return true;
+    async updateProduct(prodId, prodTitle, prodPrice, prodCategory, prodImageUrl) {
+        await this.productServicer.updateProduct(prodId, prodTitle, prodPrice, prodCategory, prodImageUrl);
+        return null;
     }
     async getAllProducts() {
         const products = await this.productServicer.getProducts();
@@ -44,49 +38,32 @@ let ProductsController = class ProductsController {
     getProduct(prodId) {
         return this.productServicer.getSingleProduct(prodId);
     }
-    async updateProduct(prodId, prodTitle, prodPrice, prodCategory, prodImageUrl) {
-        await this.productServicer.updateProduct(prodId, prodTitle, prodPrice, prodCategory, prodImageUrl);
-        return null;
-    }
     async removeProduct(prodId) {
         await this.productServicer.deleteProduct(prodId);
         return null;
     }
 };
 __decorate([
-    common_1.UseInterceptors(platform_express_1.FilesInterceptor('files', 5, {
-        storage: multer_1.diskStorage({
-            destination: './public',
-            filename: file_upload_utils_1.editFileName,
-        }),
-        fileFilter: file_upload_utils_1.imageFileFilter,
-    })),
     common_1.Post(),
     common_1.UsePipes(new joi_validation_pipe_1.JoiValidationPipe(product_joi_validation_1.ProductValidationSchema)),
     common_1.UseGuards(new auth_guard_1.AuthGuard()),
     __param(0, common_1.Body()),
-    __param(1, common_1.UploadedFiles()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Array]),
-    __metadata("design:returntype", Promise)
-], ProductsController.prototype, "addProduct", null);
-__decorate([
-    common_1.UseInterceptors(platform_express_1.FilesInterceptor('files', 5, { storage: multer_1.diskStorage({ destination: './public' }) })),
-    common_1.Post('files'),
-    __param(0, common_1.Body()),
-    __param(1, common_1.UploadedFiles()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", Promise)
-], ProductsController.prototype, "uploadImages", null);
-__decorate([
-    common_1.UseInterceptors(platform_express_1.FileInterceptor('file')),
-    common_1.Post('file'),
-    __param(0, common_1.UploadedFile()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
-], ProductsController.prototype, "uploadOneImage", null);
+], ProductsController.prototype, "addProduct", null);
+__decorate([
+    common_1.Patch(':id'),
+    common_1.UseGuards(new auth_guard_1.AuthGuard()),
+    __param(0, common_1.Param('id')),
+    __param(1, common_1.Body('title')),
+    __param(2, common_1.Body('price')),
+    __param(3, common_1.Body('category')),
+    __param(4, common_1.Body('imageUrl')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, Number, String, String]),
+    __metadata("design:returntype", Promise)
+], ProductsController.prototype, "updateProduct", null);
 __decorate([
     common_1.Get(),
     __metadata("design:type", Function),
@@ -100,18 +77,6 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "getProduct", null);
-__decorate([
-    common_1.Patch(':id'),
-    common_1.UseGuards(new auth_guard_1.AuthGuard()),
-    __param(0, common_1.Param('id')),
-    __param(1, common_1.Body('title')),
-    __param(2, common_1.Body('price')),
-    __param(3, common_1.Body('category')),
-    __param(4, common_1.Body('imageUrl')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, Number, String, String]),
-    __metadata("design:returntype", Promise)
-], ProductsController.prototype, "updateProduct", null);
 __decorate([
     common_1.Delete(':id'),
     common_1.UseGuards(new auth_guard_1.AuthGuard()),
