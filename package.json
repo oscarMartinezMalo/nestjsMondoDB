@@ -28,7 +28,7 @@
     "@nestjs/mongoose": "^6.4.0",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/serve-static": "^2.1.4",
-    "@nextnm/nestjs-mailgun": "^1.0.4",
+    "@nextnm/nestjs-mailgun": "^1.1.2",
     "@paypal/checkout-server-sdk": "^1.0.2",
     "bcrypt": "^4.0.1",
     "bcryptjs": "^2.4.3",
